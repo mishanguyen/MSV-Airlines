@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.footer-section {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 1rem 0 1rem;
+    position: fixed;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+}
+
+.row li {
+    margin-right: 0.5rem;
+    display: flex;
+    list-style: none;
+    float: left;
+}
