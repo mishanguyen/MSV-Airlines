@@ -1,18 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import { Routes, Route, Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import About from './component/about/About'
 import Header from './component/header/Header';
 import Footer from './component/footer/Footer';
+import SignUp from './component/signUp/SignUp';
 
 function App() {
   return (
-    <div>
+    <Router>
       <Header />
-      <About />
+      
+      <Routes>
+        <Route path='/signup' exact element={<SignUp />} />
+        <Route path='/about' exact element={<About />} />
+      </Routes>
       <Footer />
-    </div>
+    </Router>
   );
 
   // return (
