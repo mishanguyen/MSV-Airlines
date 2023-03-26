@@ -1,43 +1,42 @@
+import React, { useEffect, useState } from 'react'
 import logo from './logo.svg';
-import './App.css';
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-// import { BrowserRouter as Router, Switch, 
-//   Route, Redirect,} from "react-router-dom";
+import { Routes, Route, Router } from 'react-router-dom';
 import About from './component/about/About'
 import Header from './component/header/Header';
 import Footer from './component/footer/Footer';
-import Search from './component/search/Search';
-import SignUp from './component/signUp/SignUp';
-import { FaRegFileCode } from 'react-icons/fa';
+import Flights from './component/flight/Flight'
+
+
 function App() {
+
+  const [backendData, setBackendData] = useState([{}])
+
+  useEffect(() => {
+    fetch("/api").then(
+      response => response.json()
+    ).then(
+      data => {
+        setBackendData(data)
+      }
+    )
+  }, [])
+
   return (
-      <Router>
-        <Header />
-          <Routes>
-            <Route path='/search' exact element={<Search/>}/>
-            <Route path='/signup' exact element={<SignUp/>}/>
-            <Route path='/about' exact element={<About/>}/>
-          </Routes>
+    <div>
+      {/* {(typeof backendData.users === 'undefined') ? (
+        <p>Loading...</p>
+      ):(
+        backendData.users.map((user,i) => (
+          <p key={i}>{user}</p>
+        ))
+      )} */}
+      <Header />
+      <About />
+      <Flights />
       <Footer />
-      </Router>
 
-  );
-
-  // return (
-  //   <div className="App">
-  //     <Header />
-
-  //     {/* <Router>
-  //         <Routes>
-  //           <Route path='/about' element={<About />} />
-  //         </Routes>
-  //     </Router> */}
-
-
-  //   </div>
-  // );
+    </div>
+  )
 }
 
-
-export default App;
+export default App

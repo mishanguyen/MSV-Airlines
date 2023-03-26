@@ -1,45 +1,32 @@
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const pool = require("./pg");
+// const express = require('express')
+// const FlightSearch = require('./FlightSearch');
 
-app.use(cors());
-app.use(express.json());
+// const app = express()
 
-//create a customer (signup)
-// app.post("/signup", async(req, res) =>{
-//     try{
-//         console.log(req.body);
-//     }
-//     catch (err){
-//         console.log(err.message);
-
-//     }
+// app.get("/api", (req, res) => {
+//     res.json({ "users": ["userOne", "userTwo", "userThree"]})
 // })
 
-//search for flight
-app.post("/search", async(req, res, next) =>{
-    try{
-        const filters = req.query;
-        const filteredUsers = data.filter(user => {
-            let valid = true;
-            for (key in filters){
-                console.log(key, user[key], filters[key]);
-                isValid = isValid && user[key] == filters[key]; 
-            }
-            return valid;
-        });
-        res.send(filteredUsers)
-    }
-    catch (err){
-        console.log(err.message);
+// app.listen(5200, () => { console.log("Server started on port 5200")})
 
-    }
-})
-app.get("", (req, res) =>{
-    res.json({"users": ["user1", "user2", "user3"]})
+const express = require('express')
+const FlightSearch = require('./FlightSearch');
 
+const app = express();
 
+app.get("/api", (req, res) => {
+    res.json({ "users": ["userOne", "userTwo", "userThree"]})
 })
 
-app.listen(4000, () => {console.log("Server started on port 5000")})
+app.get('/flights', async (req, res) => {
+    const { origin, destination } = req.query;
+  
+    try {
+      const flights = await FlightSearch.searchFlights(origin, destination);
+      res.json(flights);
+    } catch (error) {
+      res.status(500).json({ message: 'Error searching for flights' });
+    }
+});
+
+app.listen(5200, () => { console.log("Server started on port 5200")})
