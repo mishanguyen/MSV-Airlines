@@ -1,11 +1,9 @@
 import React from 'react'
-// import { BrowserRouter as Router, Switch, 
-//     Route, Redirect,} from "react-router-dom";
 import './header.css'
 import logo from './logo.png'
 console.log(logo);
 
-function Header({}) {
+function Header() {
     return (
         <header>
             <nav className='nav'>
@@ -19,6 +17,7 @@ function Header({}) {
                     <li>
                         <a href='/about'>About Us</a>
                     </li>
+
                     <li>
                         <a href='/search'>Search Flight</a>
                     </li>
@@ -46,11 +45,11 @@ function Header({}) {
 
     );
 
-    {/* <nav className='narbar'>
+    /* <nav className='narbar'>
             <div className='narbar-container'>
                 <h1>Hello</h1>
             </div>
-        </nav> */}
+        </nav> */
 }
 
-export default Header
+export default Header;

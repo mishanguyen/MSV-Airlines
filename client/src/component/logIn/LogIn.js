@@ -4,7 +4,7 @@ import "./LogIn.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function LoginPage() {
+function LogIn() {
   const [err, setErr] = React.useState(false);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -73,4 +73,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default LogIn;

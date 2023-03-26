@@ -17,7 +17,7 @@ function SignUp() {
     try {
       const url = "http://localhost:5000/api/user/signup";
       const { data: res } = await axios.post(url,data);
-      console.log(res.message);
+      console.log(res.messsage);
       navigate("/login")
     } catch (err) {
       setErr(true);
