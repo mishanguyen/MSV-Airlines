@@ -15,7 +15,7 @@ function SignUp() {
     const password = e.target[2].value;
     const data = { name, email, password };
     try {
-      const url = "http://localhost:5000/api/user/signup";
+      const url = "http://localhost:5300/api/user/signup";
       const { data: res } = await axios.post(url,data);
       console.log(res.messsage);
       navigate("/login")
@@ -30,7 +30,7 @@ function SignUp() {
         <div className="SignUpForm">
           <form className="SignUp" onSubmit={handleSubmit}>
             <div className="DataInput">
-              <label for="name">Name: </label>
+              <label htmlFor="name">Name: </label>
               <input
                 type="text"
                 id="name"
@@ -40,7 +40,7 @@ function SignUp() {
               ></input>
             </div>
             <div className="DataInput">
-              <label for="email">Email: </label>
+              <label htmlFor="email">Email: </label>
               <input
                 type="text"
                 id="email"
@@ -50,7 +50,7 @@ function SignUp() {
               ></input>
             </div>
             <div className="DataInput">
-              <label for="password">Password: </label>
+              <label htmlFor="password">Password: </label>
               <input
                 type="password"
                 id="password"

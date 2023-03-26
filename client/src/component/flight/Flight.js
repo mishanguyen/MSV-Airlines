@@ -5,16 +5,6 @@ function Flights() {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [flights, setFlights] = useState([]);
-
-  // const handleSearch = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await axios.get(`http://localhost:5300/flights?origin=${origin}&destination=${destination}`);
-  //     setFlights(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   
   const handleSearch = async (event) => {
     event.preventDefault();

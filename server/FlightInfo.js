@@ -1,16 +1,31 @@
 const express = require("express");
-const app = express();
+const flights = express.Router();
 const cors = require("cors");
 const pool = require("./dmbs");
 
 //middleware
-app.use(cors());
-app.use(express.json()); //req.body
+flights.use(cors());
+flights.use(express.json()); //req.body
+
+async function searchFlights(origin, destination) {
+  try {
+    const fetch = require('node-fetch');
+    const response = await fetch(`http://localhost:5300/flights?origin=${origin}&destination=${destination}`);
+    const flights = await response.json();
+    console.log('flights:', flights);
+    return flights;
+  } catch (error) {
+    console.log('Error searching for flights:', error);
+    return [];
+  }
+}
+
+// module.exports = { searchFlights };
 
 //ROUTES//
 
 // get all flights
-app.get("/flights", async (req, res) => {
+flights.get("/", async (req, res) => {
   try {
     const allFlights = await pool.query("SELECT * FROM flights");
     res.json(allFlights.rows);
@@ -20,7 +35,7 @@ app.get("/flights", async (req, res) => {
 });
 
 // get a specific flight by ID
-app.get("/flights/:flightId", async (req, res) => {
+flights.get("/:flightId", async (req, res) => {
   try {
     const { flightId } = req.params;
     const flight = await pool.query("SELECT * FROM flights WHERE flightid = $1", [flightId]);
@@ -30,7 +45,15 @@ app.get("/flights/:flightId", async (req, res) => {
   }
 });
 
-app.listen(5300, () => {
-  console.log("server has started on port 5300");
+flights.get('/', async (req, res) => {
+  const { origin, destination } = req.query;
+
+  try {
+    const flights = await searchFlights(origin, destination);
+    res.json(flights);
+  } catch (error) {
+    res.status(500).json({ message: 'Error searching for flights' });
+  }
 });
 
+module.exports = flights;

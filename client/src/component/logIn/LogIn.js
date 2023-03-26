@@ -1,12 +1,12 @@
 import { useState } from "react";
 import React from "react";
 import "./LogIn.css";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function LogIn() {
   const [err, setErr] = React.useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,7 +24,7 @@ function LogIn() {
     const password = e.target[1].value;
     const data = {email, password };
     try {
-      const url = "http://localhost:5000/api/user/login";
+      const url = "http://localhost:5300/api/user/login";
       const { data: res } = await axios.post(url,data);
       localStorage.setItem("token",res.data);
       window.location="/"
