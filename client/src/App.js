@@ -24,13 +24,6 @@ function App() {
   }, [])
 
   return (
-      /* {(typeof backendData.users === 'undefined') ? (
-        <p>Loading...</p>
-      ):(
-        backendData.users.map((user,i) => (
-          <p key={i}>{user}</p>
-        ))
-      )} */
       <Router>
         <Header />
         <Routes>

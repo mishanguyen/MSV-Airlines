@@ -1,5 +1,5 @@
 import React from 'react';
-import './Footer.css';
+import './footer.css';
 import { FaCcVisa, FaPaypal, FaCcMastercard, FaApplePay } from 'react-icons/fa';
 
 
