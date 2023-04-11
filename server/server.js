@@ -10,8 +10,7 @@ app.use('/flights', flights);
 app.get("/api", (req, res) => {
     res.json({ "users": ["userOne", "userTwo", "userThree"]})
 })
-
+ 
 app.use('/', auth);
 
-app.listen(5300, () => { console.log("Server started on port 5300")})
-
+app.listen(5000, () => { console.log("Server started on port 5000")})

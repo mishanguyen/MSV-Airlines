@@ -10,7 +10,7 @@ flights.use(express.json()); //req.body
 async function searchFlights(origin, destination) {
   try {
     const fetch = require('node-fetch');
-    const response = await fetch(`http://localhost:5300/flights?origin=${origin}&destination=${destination}`);
+    const response = await fetch(`http://localhost:5000/flights?origin=${origin}&destination=${destination}`);
     const flights = await response.json();
     console.log('flights:', flights);
     return flights;
@@ -19,8 +19,6 @@ async function searchFlights(origin, destination) {
     return [];
   }
 }
-
-// module.exports = { searchFlights };
 
 //ROUTES//
 
