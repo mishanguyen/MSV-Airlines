@@ -16,7 +16,6 @@ function Header() {
     return (
         <header>
             <nav className='nav'>
-                {/* <a href='/' className='airline-name'>MSV Airline</a> */}
                 <img src={logo} alt='logo' className='logo'/>
                 <ul>
                     <li>
@@ -26,31 +25,30 @@ function Header() {
                     <li>
                         <a href='/about'>About Us</a>
                     </li>
-
+{/* 
                     <li>
                         <a href='/search'>Search Flight</a>
-                    </li>
+                    </li> */}
 
                     <li>
                         <a href='/myflight'>My Flight</a>
                     </li>
 
                     <li>
-                        <a href='/signup'>Sign Up</a>
-                    </li>
-
-                    <li>
-                        <a href='/login'>Log In</a>
-                    </li>
-
-                    <li>
                         <a href='/contact'>Contact Us</a>
                     </li>
+                    {!isLoggedIn && (<li>
+                        <a href='/signup'>Sign Up</a>
+                    </li>)}
+
+                    {!isLoggedIn && (<li>
+                        <a href='/login'>Log In</a>
+                    </li>)}
                     <li>
                         {isLoggedIn && (
-                            <div className="LogoutButton">
-                            <button onClick={handleLogout}>Logout</button>
-                            </div>
+                            <li>
+                            <a href="/login" onClick={handleLogout}>Logout</a>
+                            </li>
                         )}
                     </li>
 

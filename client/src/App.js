@@ -28,7 +28,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/about" exact element={<About />} />
-          <Route path="/search" exact element={<Flights />} />
+          <Route path="/" exact element={<Flights />} />
           <Route path="/signup" exact element={<SignUp />}/>
           <Route path="/login" exact element={<LogIn />}/>
         </Routes>

@@ -11,7 +11,10 @@ function Flights() {
     try {
       const response = await axios.get(`http://localhost:5000/flights?origin=${origin}&destination=${destination}`);
       // filter the flights that match the origin and destination entered by the user
-      const filteredFlights = response.data.filter((flight) => flight.origin === origin && flight.destination === destination);
+      console.log(response.data);
+      
+      const filteredFlights = response.data.rows.filter((flight) => flight.origin.toLowerCase() === origin.toLowerCase() && flight.destination.toLowerCase() === destination.toLowerCase());
+      console.log(filteredFlights);
       setFlights(filteredFlights);
     } catch (error) {
       console.error(error);
