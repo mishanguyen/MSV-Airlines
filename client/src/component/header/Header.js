@@ -1,9 +1,18 @@
 import React from 'react'
 import './header.css'
 import logo from './logo.png'
+import { useNavigate } from 'react-router-dom';
 console.log(logo);
 
 function Header() {
+    const isLoggedIn = localStorage.getItem("token");
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
+
     return (
         <header>
             <nav className='nav'>
@@ -37,6 +46,13 @@ function Header() {
                     <li>
                         <a href='/contact'>Contact Us</a>
                     </li>
+                    <li>
+                        {isLoggedIn && (
+                            <div className="LogoutButton">
+                            <button onClick={handleLogout}>Logout</button>
+                            </div>
+                        )}
+                    </li>
 
                 </ul>
             </nav>
@@ -44,12 +60,6 @@ function Header() {
 
 
     );
-
-    /* <nav className='narbar'>
-            <div className='narbar-container'>
-                <h1>Hello</h1>
-            </div>
-        </nav> */
 }
 
 export default Header;

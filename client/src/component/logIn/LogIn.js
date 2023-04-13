@@ -1,11 +1,9 @@
 import { useState } from "react";
 import React from "react";
 import "./LogIn.css";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function LogIn() {
-  const isLoggedIn = localStorage.getItem("token");
   const [err, setErr] = React.useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -61,7 +59,7 @@ function LogIn() {
                 required
               ></input>
             </div>
-            {err && <span className="errorLogin">Email or password might are incorrect. Please try again.</span>}
+            {err && <span className="errorLogin">Email or password might be incorrect. Please try again.</span>}
             <div className="LoginButton">
               <input type="submit" value="Log in" className="submitBtn"></input>
             </div>
