@@ -1,16 +1,16 @@
-const express = require('express')
-const flights = require('./FlightInfo');
-const cors =  require('cors');
-const auth = require('./auth')
+const express = require("express");
 const app = express();
+const cors = require("cors");
+const { json } = require("express");
+const auth = require('./auth');
+const flights = require('./flightSearch');
+const fs = require('fs');
 
 app.use(cors());
-app.use('/flights', flights);
+app.use(express.json());
+app.use("/api/users", auth);
+app.use("/", flights);
 
-app.get("/api", (req, res) => {
-    res.json({ "users": ["userOne", "userTwo", "userThree"]})
-})
- 
-app.use('/', auth);
+//search flight base on origin and destination
 
-app.listen(5000, () => { console.log("Server started on port 5000")})
+app.listen(5000, () => {console.log("Server started on port 5000")})

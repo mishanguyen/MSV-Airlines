@@ -1,17 +1,17 @@
 import { useState } from "react";
 import React from "react";
 import "./LogIn.css";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function LogIn() {
+  const isLoggedIn = localStorage.getItem("token");
   const [err, setErr] = React.useState(false);
-  // const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -20,13 +20,13 @@ function LogIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const email = e.target[0].value;
+    const username = e.target[0].value;
     const password = e.target[1].value;
-    const data = {email, password };
+    const data = { username, password };
     try {
-      const url = "http://localhost:5300/api/user/login";
+      const url = "http://localhost:5000/api/users/login";
       const { data: res } = await axios.post(url,data);
-      localStorage.setItem("token",res.data);
+      localStorage.setItem("token", res.data);
       window.location="/"
     } catch (err) {
       setErr(true);
@@ -40,14 +40,13 @@ function LogIn() {
         <div className="LoginForm">
           <form className="LogIn" onSubmit={handleSubmit}>
             <div className="DataInput">
-              <label htmlFor="email">Email: </label>
+              <label htmlFor="username">Username: </label>
               <input
                 type="text"
-                id="email"
-                name="email"
-                placeholder="janedoe@gmail.com"
-                value={email}
-                onChange={handleEmailChange}
+                id="username"
+                name="username"
+                value={username}
+                onChange={handleUsernameChange}
                 required
               ></input>
             </div>
@@ -62,11 +61,11 @@ function LogIn() {
                 required
               ></input>
             </div>
+            {err && <span className="errorLogin">Email or password might are incorrect. Please try again.</span>}
             <div className="LoginButton">
-              <input type="submit" value="Log in"></input>
+              <input type="submit" value="Log in" className="submitBtn"></input>
             </div>
           </form>
-          {err && <span>Invalid Credentials</span>}
         </div>
       </div>
     </div>

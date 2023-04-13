@@ -11,7 +11,7 @@ function Header() {
                 <img src={logo} alt='logo' className='logo'/>
                 <ul>
                     <li>
-                        <a href='/home'>Home</a>
+                        <a href='/'>Home</a>
                     </li>
 
                     <li>

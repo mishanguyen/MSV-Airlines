@@ -14,7 +14,7 @@ function App() {
   const [backendData, setBackendData] = useState([{}])
 
   useEffect(() => {
-    fetch("http://localhost:5300/api").then(
+    fetch("http://localhost:5000/api/users").then(
       response => response.json()
     ).then(
       data => {
