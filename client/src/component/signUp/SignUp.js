@@ -1,88 +1,89 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import './SignUp.css';
 
-function Signup() {
+function SignUp() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('');
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
   const [address, setAddress] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [err, setErr] = React.useState(false);
+  const navigate = useNavigate();
 
-  const handleSignup = async (event) => {
-    event.preventDefault();
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    const data = {
+      username: username, 
+      password: password, 
+      userType: userType, 
+      fname: fname, 
+      lname: lname, 
+      address: address
+    };
     try {
-      const response = await axios.post("http://localhost:5000/api/users/signup", {
-          username: username, password: password, userType: userType, fname: fname, lname: lname, address: address
-      });
-
-      console.log(response);
-      
-      if (response.data.message) {
-        setSuccessMessage(response.data.message);
-      }
-
-    } catch (error) {
-      console.log(error);
+      const url = "http://localhost:5000/api/users/signup";
+      const { data: res } = await axios.post(url, data);
+      localStorage.setItem("token", res.data);
+      navigate("/");
+    } catch (err) {
+      setErr(true);
     }
   };
-
+  
   return (
-    <div className="signup-container">
-      <h2>Sign Up</h2>
-      <label>
-        Username: 
+    <div className="SignUpPage">
+      <div className="SignUpContainer">
+        <h1>Sign Up</h1>
+        <label>Username: </label>
         <input
           type="text"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
-      </label>
-      <label className="firstName">
-        First Name: 
-        <input type = "text" value = {fname} onChange={(event) => setFname(event.target.value)}/>
-      </label>
-      <label>
-        Last Name: 
-        <input type = "text" value = {lname} onChange={(event) => setLname(event.target.value)}/>
-      </label>
-
-      <br />
-      <label>
-        Password 
+        <label className="firstName">First Name: </label>
+        <input 
+          type = "text" 
+          value = {fname} 
+          onChange={(event) => setFname(event.target.value)}
+        />
+        <label>Last Name: </label>
+        <input 
+          type = "text" 
+          value = {lname} 
+          onChange={(event) => setLname(event.target.value)}
+        />
+        <label>Password: </label>
         <input
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-      </label>
-      <label>
-        Address: 
-        <input type = "text" value = {address} onChange={(event) => setAddress(event.target.value)}/>
-      </label>
-      <br />
-
-      <label>
-        User type: 
+        <label>Address: </label>
+        <input 
+          type = "text" 
+          value = {address} 
+          onChange={(event) => setAddress(event.target.value)}
+        />
+        <label>User type: </label>
         <select value={userType} onChange={(event) => setUserType(event.target.value)}>
           <option value="">Select user type</option>
           <option value="customer">Customer</option>
           <option value="employee">Employee</option>
         </select>
-      </label>
-      <br />
-      <button onClick={handleSignup}>Sign Up</button>
+        <button onClick={handleSignup}>Sign Up</button>
 
-      {successMessage ? (
-  <div className="success-message">
-    {successMessage}
-  </div>
-) : null}
+        {err && (
+          <span className="success-message">
+            Error registering the user.
+          </span>
+        )}
 
+      </div>
     </div>
   );
 }
 
-export default Signup;
+export default SignUp;

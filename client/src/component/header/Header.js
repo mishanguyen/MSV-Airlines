@@ -25,10 +25,6 @@ function Header() {
                     <li>
                         <a href='/about'>About Us</a>
                     </li>
-{/* 
-                    <li>
-                        <a href='/search'>Search Flight</a>
-                    </li> */}
 
                     <li>
                         <a href='/myflight'>My Flight</a>
@@ -44,13 +40,12 @@ function Header() {
                     {!isLoggedIn && (<li>
                         <a href='/login'>Log In</a>
                     </li>)}
-                    <li>
-                        {isLoggedIn && (
-                            <li>
-                            <a href="/login" onClick={handleLogout}>Logout</a>
-                            </li>
-                        )}
-                    </li>
+                    
+                    {isLoggedIn && (
+                        <li>
+                        <a href="/login" onClick={handleLogout}>Logout</a>
+                        </li>
+                    )}
 
                 </ul>
             </nav>

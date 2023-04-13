@@ -33,6 +33,7 @@ auth.post("/signup", async (req, res) => {
     const userId = newUser.rows[0].id;
 
     if (userType === "customer") {
+      console.log(newUser);
       const newCustomer = await pool.query(
         "INSERT INTO customer (custid, fname, address, lname) VALUES ($1, $2, $3, $4)",
         [userId, fname, address, lname]
