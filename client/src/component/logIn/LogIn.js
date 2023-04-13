@@ -42,6 +42,7 @@ function LogIn() {
               <input
                 type="text"
                 id="username"
+                placeholder="Ex: msvairlines"
                 name="username"
                 value={username}
                 onChange={handleUsernameChange}
@@ -54,6 +55,7 @@ function LogIn() {
                 type="password"
                 id="password"
                 name="password"
+                placeholder="Ex: thebestairline!"
                 value={password}
                 onChange={handlePasswordChange}
                 required

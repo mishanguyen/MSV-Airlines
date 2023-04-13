@@ -1,0 +1,67 @@
+.LoginPage {
+    width: 50%;
+    background-color: white;
+    margin: 7rem auto 0;
+    border-radius: 10px;
+    padding: 3rem;
+    text-align: center;
+}
+
+.LoginContainer {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.LogIn {
+    text-align: left;
+}
+
+.DataInput {
+    margin: 1rem;
+
+}
+
+.DataInput input {
+    background-color: #f0f0f0;
+    padding: 0.5rem;
+    width: 100%;
+    border: 2px #f0f0f0 solid;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.DataInput input:focus {
+    outline: none;
+}
+
+.DataInput label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.LoginButton {
+    margin: 1rem;
+}
+
+.LoginButton input {
+    padding: 0.5rem 2rem;
+    background-color: #0E1215;
+    border: 1px #0E1215 solid;
+    border-radius: 5px;
+    color: white;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.LoginButton input:hover {
+    opacity: 0.7;
+}
+
+.LoginButton input:active {
+    opacity: 0.9;
+}
+
+.errorLogin {
+    margin: 1rem;
+}
