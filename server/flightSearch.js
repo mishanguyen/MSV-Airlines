@@ -32,4 +32,30 @@ flights.get('/allflights', async(req, res) =>{
     })
 })
 
+flights.get('/origins', async (req, res) => {
+    const query = "SELECT DISTINCT origin FROM flights";
+    pool.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Internal server error" });
+        } else {
+            const origins = results.rows.map(row => row.origin);
+            return res.json(origins);
+        }
+    });
+});
+
+flights.get('/destinations', async (req, res) => {
+    const query = "SELECT DISTINCT destination FROM flights";
+    pool.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Internal server error" });
+        } else {
+            const destinations = results.rows.map(row => row.destination);
+            return res.json(destinations);
+        }
+    });
+});
+
 module.exports = flights;

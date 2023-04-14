@@ -9,7 +9,7 @@ const fs = require('fs');
 app.use(cors());
 app.use(express.json());
 app.use("/api/users/", auth);
-app.use("/", flights);
+app.use("/api/flights", flights);
 
 //search flight base on origin and destination
 

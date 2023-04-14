@@ -7,6 +7,7 @@ import Footer from './component/footer/Footer';
 import Flights from './component/flight/Flight';
 import SignUp from './component/signUp/SignUp';
 import LogIn from './component/logIn/LogIn';
+import Book from './component/bookFlights';
 
 
 function App() {
@@ -28,9 +29,10 @@ function App() {
         <Header />
         <Routes>
           <Route path="/about" exact element={<About />} />
-          <Route path="/" exact element={<Flights />} />
+          {/* <Route path="/" exact element={<Flights />} /> */}
           <Route path="/signup" exact element={<SignUp />}/>
           <Route path="/login" exact element={<LogIn />}/>
+          <Route path="/" exact element={<Book />}/>
         </Routes>
         <Footer />
       </Router>

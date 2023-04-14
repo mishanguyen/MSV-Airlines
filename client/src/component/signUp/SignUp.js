@@ -37,50 +37,68 @@ function SignUp() {
     <div className="SignUpPage">
       <div className="SignUpContainer">
         <h1>Sign Up</h1>
-        <label>Username: </label>
-        <input
-          type="text"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-        />
-        <label className="firstName">First Name: </label>
-        <input 
-          type = "text" 
-          value = {fname} 
-          onChange={(event) => setFname(event.target.value)}
-        />
-        <label>Last Name: </label>
-        <input 
-          type = "text" 
-          value = {lname} 
-          onChange={(event) => setLname(event.target.value)}
-        />
-        <label>Password: </label>
-        <input
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <label>Address: </label>
-        <input 
-          type = "text" 
-          value = {address} 
-          onChange={(event) => setAddress(event.target.value)}
-        />
-        <label>User type: </label>
-        <select value={userType} onChange={(event) => setUserType(event.target.value)}>
-          <option value="">Select user type</option>
-          <option value="customer">Customer</option>
-          <option value="employee">Employee</option>
-        </select>
-        <button onClick={handleSignup}>Sign Up</button>
-
-        {err && (
-          <span className="success-message">
-            Error registering the user.
-          </span>
-        )}
-
+        <form className="SignUpForm" onSubmit={handleSignup}>
+          <div className="DataInput">
+            <label>Username: </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+            />
+          </div>
+          <div className="DataInput">
+            <label className="firstName">First Name: </label>
+            <input 
+              type = "text" 
+              value = {fname} 
+              onChange={(event) => setFname(event.target.value)}
+            />
+          </div>
+          <div className="DataInput">
+            <label>Last Name: </label>
+            <input 
+              type = "text" 
+              value = {lname} 
+              onChange={(event) => setLname(event.target.value)}
+            />
+          </div>
+          <div className="DataInput">
+            <label>Password: </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </div>
+          <div className="DataInput">
+            <label>Address: </label>
+            <input 
+              type = "text" 
+              value = {address} 
+              onChange={(event) => setAddress(event.target.value)}
+            />
+          </div>
+          <div className="DataInput">
+            <label>Role: </label>
+            <select value={userType} onChange={(event) => setUserType(event.target.value)}>
+              <option value="">Select role</option>
+              <option value="customer">Customer</option>
+              <option value="employee">Employee</option>
+            </select>
+          </div>     
+          <div className="SignUpButton">
+              <input
+                type="submit"
+                value="Sign Up"
+                onSubmit={handleSignup}
+              ></input>
+            </div>
+          {err && (
+            <span className="errorSignUp">
+              Error registering the user.
+            </span>
+          )}
+        </form>
       </div>
     </div>
   );
