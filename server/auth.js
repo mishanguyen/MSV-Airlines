@@ -7,6 +7,7 @@ const pool = require('./dmbs');
 //sign up options for customers  
 auth.post("/signup", async (req, res) => {
   const { username, password, userType, fname, lname, address } = req.body;
+  console.log(req.body);
   try {
     // Check if user already exists
     const existingUser = await pool.query(

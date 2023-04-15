@@ -5,7 +5,9 @@ const { json } = require("express");
 const auth = require('./auth');
 const flights = require('./flightSearch');
 const fs = require('fs');
+const bodyParser = require("body-parser");
 
+app.use(bodyParser.urlencoded( {extended: true}));
 app.use(cors());
 app.use(express.json());
 app.use("/api/users/", auth);

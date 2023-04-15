@@ -71,7 +71,7 @@ function Flights() {
                 <select id="origin" value={origin} onChange={handleOriginChange}>
                     <option value="">Select origin</option>
                     {origins.map((city) => (
-                    <option value={city}>
+                    <option key={origins.indexOf(city)} value={city}>
                         {city}
                     </option>
                     ))}
@@ -86,7 +86,7 @@ function Flights() {
                 >
                     <option value="">Select destination</option>
                     {destinations.map((city) => (
-                    <option value={city}>
+                    <option key={destinations.indexOf(city)} value={city}>
                         {city}
                     </option>
                 ))}

@@ -23,6 +23,7 @@ function SignUp() {
       lname: lname, 
       address: address
     };
+    console.log(data);
     try {
       const url = "http://localhost:5000/api/users/signup";
       const { data: res } = await axios.post(url, data);

@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import About from './component/about/About'
 import Header from './component/header/Header';
 import Footer from './component/footer/Footer';
-import Flights from './component/flight/Flight';
 import SignUp from './component/signUp/SignUp';
 import LogIn from './component/logIn/LogIn';
 import Book from './component/bookFlights';
@@ -12,24 +11,11 @@ import Book from './component/bookFlights';
 
 function App() {
 
-  const [backendData, setBackendData] = useState([{}])
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/users").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-      }
-    )
-  }, [])
-
   return (
       <Router>
         <Header />
         <Routes>
           <Route path="/about" exact element={<About />} />
-          {/* <Route path="/" exact element={<Flights />} /> */}
           <Route path="/signup" exact element={<SignUp />}/>
           <Route path="/login" exact element={<LogIn />}/>
           <Route path="/" exact element={<Book />}/>
