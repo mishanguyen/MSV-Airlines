@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const classes = ["Economy", "Business"];
-
 function Flights() {
     const [origin, setOrigin] = useState('');
     const [minDate, setMinDate] = useState('');
@@ -10,9 +8,9 @@ function Flights() {
     const [isRoundTrip, setIsRoundTrip] = useState(true);
     const [departDate, setDepartDate] = useState('');
     const [returnDate, setReturnDate] = useState('');
-    const [flightClass, setFlightClass] = useState('Economy');
     const [origins, setOrigins] = useState([]);
     const [destinations, setDestinations] = useState([]);
+    const [flights, setFlights] = useState([]);
     
     useEffect(() => {
         const today = new Date().toISOString().split("T")[0];
@@ -35,16 +33,12 @@ function Flights() {
         fetchDestinations();
     }, []);
 
-    useEffect(() => {
-        
-    }, []);
-
     const handleOriginChange = (event) => {
-        setOrigin(origins.find((city) => city === event.target.value));
+        setOrigin(event.target.value);
     };
 
     const handleDestinationChange = (event) => {
-        setDestination(destinations.find((city) => city === event.target.value));
+        setDestination(event.target.value);
     };
 
     const handleRoundTripChange = () => {
@@ -59,9 +53,24 @@ function Flights() {
         setReturnDate(event.target.value);
     };
 
-    const handleFlightClassChange = (event) => {
-        setFlightClass(event.target.value);
-    };
+    // const handleFlightClassChange = (event) => {
+    //     setFlightClass(event.target.value);
+    // };
+
+    const handleSearch = async (event) => {
+        event.preventDefault();
+        try {
+          const response = await axios.get(`http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}`);
+          // filter the flights that match the origin and destination entered by the user
+          console.log(response.data.rows);
+          setFlights(response.data.rows);
+        //   const filteredFlights = response.data.rows.filter((flight) => flight.origin.toLowerCase() === origin.toLowerCase() && flight.destination.toLowerCase() === destination.toLowerCase());
+        //   console.log(filteredFlights);
+        //   setFlights(filteredFlights);
+        } catch (error) {
+          console.error(error);
+        }
+      };
 
     return (
         <div className="App">
@@ -70,11 +79,11 @@ function Flights() {
                 <label htmlFor="origin">Origin:</label>
                 <select id="origin" value={origin} onChange={handleOriginChange}>
                     <option value="">Select origin</option>
-                    {origins.map((city) => (
-                    <option key={origins.indexOf(city)} value={city}>
-                        {city}
-                    </option>
-                    ))}
+                        {origins.map((city) => (
+                        <option key={city.code} value={city.code}>
+                            {city.code} - {city.name}
+                        </option>
+                        ))}
                 </select>
             </div>
             <div>
@@ -86,8 +95,8 @@ function Flights() {
                 >
                     <option value="">Select destination</option>
                     {destinations.map((city) => (
-                    <option key={destinations.indexOf(city)} value={city}>
-                        {city}
+                    <option key={city.code} value={city.code}>
+                        {city.code} - {city.name}
                     </option>
                 ))}
                 </select>
@@ -124,7 +133,7 @@ function Flights() {
                     />
                 </div>
             )}
-            <div>
+            {/* <div>
                 <label htmlFor="class">Class:</label>
                 <select id="class" value={flightClass} onChange={handleFlightClassChange}>
                 {classes.map((flightClass) => (
@@ -133,8 +142,8 @@ function Flights() {
                     </option>
                 ))}
                 </select>
-            </div>
-            <button onClick={() => {}}>
+            </div> */}
+            <button onClick={handleSearch}>
                 Search
             </button>
             <button onClick={() => {
@@ -144,6 +153,21 @@ function Flights() {
             }}>
                 Switch Origin/Destination
             </button>
-        </div>);}
+            <div>
+                {flights.map((flight) => (
+                <div key={flights.indexOf(flight)}>
+                    <h3>Flight ID: {flight.flightid}</h3>
+                    <p>Origin: {flight.origin}</p>
+                    <p>Destination: {flight.destination}</p>
+                    <p>Departure Time: {flight.departuretime}</p>
+                    <p>Arrival Time: {flight.arrivaltime}</p>
+                    <p>Price: ${flight.price}</p>
+                    <p>Duration: {flight.duration}</p>
+                </div>
+                ))}
+            </div>
+        </div>
+    );
+}
 
 export default Flights;

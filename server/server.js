@@ -1,10 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const { json } = require("express");
+const pool = require('./dmbs')
 const auth = require('./auth');
 const flights = require('./flightSearch');
-const fs = require('fs');
 const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded( {extended: true}));
