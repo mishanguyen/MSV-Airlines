@@ -112,21 +112,32 @@ const pool = require('./dmbs');
 
 // main().catch(console.error);
 // -------------------------------------------------------
-// AND $3 = CAST(departureTime AS DATE)
-flights.get('/flights', async (req, res) =>{
-    const {origin, destination} = req.query;
- 
-    const query = "SELECT * FROM flights WHERE LOWER(origin) = LOWER($1) AND LOWER(destination) = LOWER($2)";
-    pool.query(query, [origin, destination], (err, data) =>{
-        if (err){
-            return (res.json(err));
+
+flights.get('/flights', async (req, res) => {
+    try {
+        const { origin, destination, departureDate, returnDate } = req.query;
+    
+        let query = "SELECT * FROM flights WHERE (origin = $1 AND destination = $2";
+        const params = [origin, destination];
+  
+        if (departureDate) {
+            query += " AND CAST(departureTime AS DATE) = $3)";
+            params.push(departureDate);
         }
-        else{
-            // console.log(data)
-            return (res.json(data));
+
+        if (returnDate) {
+            query += " OR (origin = $2 AND destination = $1 AND CAST(departureTime AS DATE) = $4)";
+            params.push(returnDate);
         }
-    })
-})
+  
+        const data = await pool.query(query, params);
+        return res.json(data);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+  
 
 
 //view all the available flights

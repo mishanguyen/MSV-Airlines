@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Flights() {
@@ -11,7 +12,8 @@ function Flights() {
     const [origins, setOrigins] = useState([]);
     const [destinations, setDestinations] = useState([]);
     const [flights, setFlights] = useState([]);
-    
+    const navigate = useNavigate();
+
     useEffect(() => {
         const today = new Date().toISOString().split("T")[0];
         setMinDate(today);
@@ -53,24 +55,21 @@ function Flights() {
         setReturnDate(event.target.value);
     };
 
-    // const handleFlightClassChange = (event) => {
-    //     setFlightClass(event.target.value);
-    // };
-
     const handleSearch = async (event) => {
         event.preventDefault();
         try {
-          const response = await axios.get(`http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}`);
-          // filter the flights that match the origin and destination entered by the user
-          console.log(response.data.rows);
-          setFlights(response.data.rows);
-        //   const filteredFlights = response.data.rows.filter((flight) => flight.origin.toLowerCase() === origin.toLowerCase() && flight.destination.toLowerCase() === destination.toLowerCase());
-        //   console.log(filteredFlights);
-        //   setFlights(filteredFlights);
+            let url = `http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
+            if (isRoundTrip) {
+                url += `&returnDate=${returnDate}`;
+            }
+            const response = await axios.get(url);
+            setFlights(response.data.rows);
+            // navigate to the results page with flights as state
+            navigate('/search-results', { state: {flights: response.data.rows} });
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-      };
+    };
 
     return (
         <div className="App">
@@ -133,16 +132,6 @@ function Flights() {
                     />
                 </div>
             )}
-            {/* <div>
-                <label htmlFor="class">Class:</label>
-                <select id="class" value={flightClass} onChange={handleFlightClassChange}>
-                {classes.map((flightClass) => (
-                    <option key={flightClass} value={flightClass}>
-                    {flightClass}
-                    </option>
-                ))}
-                </select>
-            </div> */}
             <button onClick={handleSearch}>
                 Search
             </button>
