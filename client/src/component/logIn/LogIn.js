@@ -22,7 +22,7 @@ function LogIn() {
     const password = e.target[1].value;
     const data = { username, password };
     try {
-      const url = "http://localhost:5000/api/users/login";
+      const url = "http://localhost:6000/api/users/login";
       const { data: res } = await axios.post(url,data);
       localStorage.setItem("token", res.data);
       window.location="/"
