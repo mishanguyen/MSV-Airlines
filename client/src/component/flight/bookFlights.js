@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './bookFlights.css';
+import ToggleSwitch from './toggleSwitch';
 
 function Flights() {
     const [origin, setOrigin] = useState('');
@@ -65,95 +67,85 @@ function Flights() {
             const response = await axios.get(url);
             setFlights(response.data.rows);
             // navigate to the results page with flights as state
-            navigate('/search-results', { state: {flights: response.data.rows} });
+            navigate('/search-results', { state: {flights: response.data.rows, origin: origin} });
         } catch (error) {
             console.error(error);
         }
     };
 
     return (
-        <div className="App">
-            <h1>Flight Booking</h1>
-            <div>
-                <label htmlFor="origin">Origin:</label>
-                <select id="origin" value={origin} onChange={handleOriginChange}>
-                    <option value="">Select origin</option>
-                        {origins.map((city) => (
-                        <option key={city.code} value={city.code}>
-                            {city.code} - {city.name}
-                        </option>
-                        ))}
-                </select>
-            </div>
-            <div>
-                <label htmlFor="destination">Destination:</label>
-                <select
-                    id="destination"
-                    value={destination}
-                    onChange={handleDestinationChange}
-                >
-                    <option value="">Select destination</option>
-                    {destinations.map((city) => (
-                    <option key={city.code} value={city.code}>
-                        {city.code} - {city.name}
-                    </option>
-                ))}
-                </select>
-            </div>
-            <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        checked={!isRoundTrip}
-                        onChange={handleRoundTripChange}
-                    />
-                    One way
-                </label>
-            </div>
-            <div>
-                <label htmlFor="depart-date">Depart date:</label>
-                <input
-                    id="depart-date"
-                    type="date"
-                    min={minDate}
-                    value={departDate}
-                    onChange={handleDepartDateChange}
-                />
-            </div>
-            {isRoundTrip && (
-                <div>
-                    <label htmlFor="return-date">Return date:</label>
-                    <input
-                        id="return-date"
-                        min={minDate}
-                        type="date"
-                        value={returnDate}
-                        onChange={handleReturnDateChange}
-                    />
+        <div className="searchPage">
+            <h1>Book Your Trip</h1>
+            <div className="searchPageContainer">
+                <ToggleSwitch checked={!isRoundTrip} onChange={handleRoundTripChange} />
+                <div className='formContainer'>
+                    <form className="searchForm" onSubmit={handleSearch}>
+                        <div className='userInput' >
+                            <label htmlFor="origin">Origin:</label>
+                            <select id="origin" value={origin} onChange={handleOriginChange} required>
+                                <option value="">Select origin</option>
+                                    {origins.map((city) => (
+                                    <option key={city.code} value={city.code}>
+                                        {city.code} - {city.name}
+                                    </option>
+                                    ))}
+                            </select>
+                        </div>
+                        <div className='userInput'>
+                            <label htmlFor="destination">Destination:</label>
+                            <select
+                                id="destination"
+                                value={destination}
+                                onChange={handleDestinationChange}
+                                required
+                            >
+                                <option value="">Select destination</option>
+                                {destinations.map((city) => (
+                                <option key={city.code} value={city.code}>
+                                    {city.code} - {city.name}
+                                </option>
+                            ))}
+                            </select>
+                        </div>
+                        <div className='userInput'>
+                            <label htmlFor="depart-date">Depart date:</label>
+                            <input
+                                id="depart-date"
+                                type="date"
+                                min={minDate}
+                                value={departDate}
+                                onChange={handleDepartDateChange}
+                                required
+                            />
+                        </div>
+                        {isRoundTrip && (
+                            <div className='userInput'>
+                                <label htmlFor="return-date">Return date:</label>
+                                <input
+                                    id="return-date"
+                                    min={minDate}
+                                    type="date"
+                                    value={returnDate}
+                                    onChange={handleReturnDateChange}
+                                    required
+                                />
+                            </div>
+                        )}
+                        <div className='buttonContainer'>
+                            <button type='submit'>
+                                Search
+                            </button>
+                            <button onClick={() => {
+                                const temp = origin;
+                                setOrigin(destination);
+                                setDestination(temp);
+                            }}>
+                                Switch Origin/Destination
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            )}
-            <button onClick={handleSearch}>
-                Search
-            </button>
-            <button onClick={() => {
-                const temp = origin;
-                setOrigin(destination);
-                setDestination(temp);
-            }}>
-                Switch Origin/Destination
-            </button>
-            <div>
-                {flights.map((flight) => (
-                <div key={flights.indexOf(flight)}>
-                    <h3>Flight ID: {flight.flightid}</h3>
-                    <p>Origin: {flight.origin}</p>
-                    <p>Destination: {flight.destination}</p>
-                    <p>Departure Time: {flight.departuretime}</p>
-                    <p>Arrival Time: {flight.arrivaltime}</p>
-                    <p>Price: ${flight.price}</p>
-                    <p>Duration: {flight.duration}</p>
-                </div>
-                ))}
+               
             </div>
         </div>
     );

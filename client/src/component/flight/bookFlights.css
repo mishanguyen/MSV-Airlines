@@ -1,0 +1,30 @@
+.searchPage {
+    margin-top: 5rem
+}
+
+.searchPage h1 {
+    text-align: center;
+}
+
+.searchPageContainer {
+    width: 60%;
+    background-color: white;
+    margin: 2rem auto 5rem;
+    border-radius: 10px;
+    padding: 3rem;
+}
+
+.formContainer {
+    width: 100%;
+}
+
+.searchForm {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.userInput {
+    display: flex;
+    flex-direction: column;
+}
