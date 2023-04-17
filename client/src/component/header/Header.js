@@ -1,17 +1,25 @@
 import React from 'react'
 import './header.css'
 import logo from './logo.png'
+import { useNavigate } from 'react-router-dom';
 console.log(logo);
 
 function Header() {
+    const isLoggedIn = localStorage.getItem("token");
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
+
     return (
         <header>
             <nav className='nav'>
-                {/* <a href='/' className='airline-name'>MSV Airline</a> */}
                 <img src={logo} alt='logo' className='logo'/>
                 <ul>
                     <li>
-                        <a href='/home'>Home</a>
+                        <a href='/'>Home</a>
                     </li>
 
                     <li>
@@ -19,24 +27,25 @@ function Header() {
                     </li>
 
                     <li>
-                        <a href='/search'>Search Flight</a>
-                    </li>
-
-                    <li>
                         <a href='/myflight'>My Flight</a>
-                    </li>
-
-                    <li>
-                        <a href='/signup'>Sign Up</a>
-                    </li>
-
-                    <li>
-                        <a href='/login'>Log In</a>
                     </li>
 
                     <li>
                         <a href='/contact'>Contact Us</a>
                     </li>
+                    {!isLoggedIn && (<li>
+                        <a href='/signup'>Sign Up</a>
+                    </li>)}
+
+                    {!isLoggedIn && (<li>
+                        <a href='/login'>Log In</a>
+                    </li>)}
+                    
+                    {isLoggedIn && (
+                        <li>
+                        <a href="/login" onClick={handleLogout}>Logout</a>
+                        </li>
+                    )}
 
                 </ul>
             </nav>
@@ -44,12 +53,6 @@ function Header() {
 
 
     );
-
-    /* <nav className='narbar'>
-            <div className='narbar-container'>
-                <h1>Hello</h1>
-            </div>
-        </nav> */
 }
 
 export default Header;
