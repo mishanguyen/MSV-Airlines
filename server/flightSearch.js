@@ -1,10 +1,16 @@
-
 const express = require('express');
 const flights = express.Router();
 const pool = require('./dmbs');
-
+// CREATE TABLE Airports (Code CHAR(3) PRIMARY KEY, Name VARCHAR(100));
+// ALTER TABLE flights ADD COLUMN price VARCHAR(10);
+// ALTER TABLE flights ADD COLUMN duration TIME(4);
+// ALTER TABLE flights DROP CONSTRAINT flights_pkey;
+// ALTER TABLE flights ADD CONSTRAINT flights_pkey PRIMARY KEY (flightID, departureTime, arrivalTime);
+// Then add airports by uncommenting this:
+// ---------------------------------------
 // const axios = require("axios");
 
+// insert all destinations into the airports table from ryanair api
 // const options = {
 //     method: 'GET',
 //     url: 'https://ryanair.p.rapidapi.com/airports',
@@ -25,6 +31,8 @@ const pool = require('./dmbs');
 //       console.error(error);
 //   });
 //---------------------------------------
+// Then run this command:
+// DELETE FROM airports where code not in ('STN', 'LGW', 'DUB', 'AGP', 'AMS', 'BCN', 'ARN', 'LIS', 'WMI', 'BER', 'BGY', 'BRU', 'BUD', 'BVA', 'CPH', 'HHN', 'LUX', 'SOF', 'STN', 'VIE', 'MAD', 'BTS', 'FCO');
 
 // Then uncomment this to load flights (you're gonna have to wait a few minutes)
 // -----------------------------------------------------------------------------
@@ -82,8 +90,8 @@ const pool = require('./dmbs');
  
 // async function main() {
 //     const airports = await getAirports();
-//     const startDate = new Date('2023-04-28');
-//     const endDate = new Date('2023-04-29');
+//     const startDate = new Date('2023-04-26');
+//     const endDate = new Date('2023-04-28');
 
 //     for (let day = startDate; day <= endDate; day.setDate(day.getDate() + 1)) {
 //         for (let i = 0; i < airports.length; i++) {
@@ -100,18 +108,18 @@ const pool = require('./dmbs');
 //             }
 //         } 
 //     }
-   
 // }
 
 // main().catch(console.error);
+// -------------------------------------------------------
 
 flights.get('/flights', async (req, res) => {
     try {
         const { origin, destination, departureDate, returnDate } = req.query;
-
+    
         let query = "SELECT * FROM flights WHERE (origin = $1 AND destination = $2";
         const params = [origin, destination];
-
+  
         if (departureDate) {
             query += " AND CAST(departureTime AS DATE) = $3)";
             params.push(departureDate);
@@ -121,7 +129,7 @@ flights.get('/flights', async (req, res) => {
             query += " OR (origin = $2 AND destination = $1 AND CAST(departureTime AS DATE) = $4)";
             params.push(returnDate);
         }
-
+  
         const data = await pool.query(query, params);
         return res.json(data);
     } catch (error) {
@@ -129,6 +137,8 @@ flights.get('/flights', async (req, res) => {
         return res.status(500).json({ message: "Internal server error" });
     }
 });
+  
+
 
 //view all the available flights
 flights.get('/allflights', async(req, res) =>{

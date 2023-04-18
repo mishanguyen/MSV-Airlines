@@ -24,6 +24,7 @@
     "express-validator": "^6.15.0",
     "http-proxy-middleware": "^2.0.6",
     "jsonwebtoken": "^9.0.0",
+    "node-fetch": "^3.3.1",
     "pg": "^8.10.0",
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.10.0",
