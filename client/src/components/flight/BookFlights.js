@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './bookFlights.css';
-import ToggleSwitch from './toggleSwitch';
+import './BookFlights.css';
+import ToggleSwitch from './ToggleSwitch';
 import DepartureFlights from './DepartureFlights';
 import ReturnFlights from './ReturnFlights';
 
@@ -62,44 +62,53 @@ function Flights() {
         setReturnDate(event.target.value);
     };
 
-    // const handleSearch = async (event) => {
-    //     event.preventDefault();
-    //     try {
-    //         let url = `http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
-    //         if (isRoundTrip) {
-    //             url += `&returnDate=${returnDate}`;
-    //         }
-    //         const response = await axios.get(url);
-    //         setFlights(response.data.rows);
-    //         // navigate to the results page with flights as state
-    //         navigate('/search-results', { state: {flights: response.data.rows, origin: origin} });
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
-
     const handleSearch = async (event) => {
-      event.preventDefault();
-      try {
+        event.preventDefault();
+        try {
           let url = `http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
-          if (isRoundTrip) {
-              url += `&returnDate=${returnDate}`;
-          }
-          const response = await axios.get(url);
-          const departureFlights = response.data.rows;
-          let returnFlights = [];
-          if (isRoundTrip) {
-              // Fetch return flights
-              const returnUrl = `http://localhost:5000/api/flights/flights?origin=${destination}&destination=${origin}&departureDate=${returnDate}`;
-              const returnResponse = await axios.get(returnUrl);
-              returnFlights = returnResponse.data.rows;
-          }
-          setFlights([...departureFlights, ...returnFlights]);
-          setBookingStep('departureFlights');
-      } catch (error) {
-          console.error(error);
-      }
-  };
+            // if (isRoundTrip) {
+            //     url += `&returnDate=${returnDate}`;
+            // }
+            const response = await axios.get(url);
+            const departureFlights = response.data.rows;
+            let returnFlights = [];
+            if (isRoundTrip) {
+                // Fetch return flights
+                const returnUrl = `http://localhost:5000/api/flights/flights?origin=${destination}&destination=${origin}&departureDate=${returnDate}`;
+                const returnResponse = await axios.get(returnUrl);
+                returnFlights = returnResponse.data.rows;
+            }
+            setFlights([...departureFlights, ...returnFlights]);
+            const allFlights = [...departureFlights, ...returnFlights]
+            // navigate to the results page with flights as state
+            navigate('/departure', { state: {allFlights: allFlights, origin: origin, destination: destination, departDate: departDate, returnDate: returnDate } });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+  //   const handleSearch = async (event) => {
+  //     event.preventDefault();
+  //     try {
+  //         let url = `http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
+  //         if (isRoundTrip) {
+  //             url += `&returnDate=${returnDate}`;
+  //         }
+  //         const response = await axios.get(url);
+  //         const departureFlights = response.data.rows;
+  //         let returnFlights = [];
+  //         if (isRoundTrip) {
+  //             // Fetch return flights
+  //             const returnUrl = `http://localhost:5000/api/flights/flights?origin=${destination}&destination=${origin}&departureDate=${returnDate}`;
+  //             const returnResponse = await axios.get(returnUrl);
+  //             returnFlights = returnResponse.data.rows;
+  //         }
+  //         setFlights([...departureFlights, ...returnFlights]);
+  //         setBookingStep('departureFlights');
+  //     } catch (error) {
+  //         console.error(error);
+  //     }
+  // };
     return (
         <div className="searchPage">
             <h1>Book Your Trip</h1>

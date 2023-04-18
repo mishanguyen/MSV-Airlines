@@ -1,5 +1,5 @@
 import React from 'react';
-import './toggleSwitch.css';
+import './ToggleSwitch.css';
 
 function ToggleSwitch({ checked, onChange, isRoundTrip }) {
     return (
