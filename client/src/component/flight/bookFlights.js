@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './bookFlights.css';
 import ToggleSwitch from './toggleSwitch';
+import DepartureFlights from './DepartureFlights';
+import ReturnFlights from './ReturnFlights';
 
 function Flights() {
     const [origin, setOrigin] = useState('');
@@ -15,6 +17,9 @@ function Flights() {
     const [destinations, setDestinations] = useState([]);
     const [flights, setFlights] = useState([]);
     const navigate = useNavigate();
+    const [bookingStep, setBookingStep] = useState('search');
+    const [selectedDeparture, setSelectedDeparture] = useState(null);
+    const [selectedReturn, setSelectedReturn] = useState(null);
 
     useEffect(() => {
         const today = new Date().toISOString().split("T")[0];
@@ -57,22 +62,44 @@ function Flights() {
         setReturnDate(event.target.value);
     };
 
-    const handleSearch = async (event) => {
-        event.preventDefault();
-        try {
-            let url = `http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
-            if (isRoundTrip) {
-                url += `&returnDate=${returnDate}`;
-            }
-            const response = await axios.get(url);
-            setFlights(response.data.rows);
-            // navigate to the results page with flights as state
-            navigate('/search-results', { state: {flights: response.data.rows, origin: origin} });
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    // const handleSearch = async (event) => {
+    //     event.preventDefault();
+    //     try {
+    //         let url = `http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
+    //         if (isRoundTrip) {
+    //             url += `&returnDate=${returnDate}`;
+    //         }
+    //         const response = await axios.get(url);
+    //         setFlights(response.data.rows);
+    //         // navigate to the results page with flights as state
+    //         navigate('/search-results', { state: {flights: response.data.rows, origin: origin} });
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
 
+    const handleSearch = async (event) => {
+      event.preventDefault();
+      try {
+          let url = `http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
+          if (isRoundTrip) {
+              url += `&returnDate=${returnDate}`;
+          }
+          const response = await axios.get(url);
+          const departureFlights = response.data.rows;
+          let returnFlights = [];
+          if (isRoundTrip) {
+              // Fetch return flights
+              const returnUrl = `http://localhost:5000/api/flights/flights?origin=${destination}&destination=${origin}&departureDate=${returnDate}`;
+              const returnResponse = await axios.get(returnUrl);
+              returnFlights = returnResponse.data.rows;
+          }
+          setFlights([...departureFlights, ...returnFlights]);
+          setBookingStep('departureFlights');
+      } catch (error) {
+          console.error(error);
+      }
+  };
     return (
         <div className="searchPage">
             <h1>Book Your Trip</h1>
@@ -131,7 +158,8 @@ function Flights() {
                                 />
                             </div>
                         )}
-                        <div className='buttonContainer'>
+                        {bookingStep === 'search' && (
+                          <div className='buttonContainer'>
                             <button type='submit'>
                                 Search
                             </button>
@@ -140,9 +168,49 @@ function Flights() {
                                 setOrigin(destination);
                                 setDestination(temp);
                             }}>
-                                Switch Origin/Destination
+                              Switch Origin/Destination
                             </button>
-                        </div>
+                          </div>
+                        )}
+          
+                        {bookingStep === 'departureFlights' && (
+                          <div>
+                            <DepartureFlights
+                              flights={flights}
+                              origin={origin}
+                              destination={destination}
+                              departDate={departDate}
+                              onFlightSelect={(selectedFlight) => {
+                                setSelectedDeparture(selectedFlight);
+                                if (isRoundTrip) {
+                                  setBookingStep('returnFlights');
+                                } else {
+                                  // Navigate to the booking confirmation or payment page
+                                }
+                              }}
+                            />
+                            {isRoundTrip && (
+                              <button onClick={() => setBookingStep('returnFlights')}>
+                                Next
+                              </button>
+                            )}
+                          </div>
+                        )}
+      
+                        {bookingStep === 'returnFlights' && isRoundTrip && (
+                          <div>
+                            <ReturnFlights
+                              flights={flights}
+                              origin={destination}
+                              destination={origin}
+                              returnDate={returnDate}
+                              onFlightSelect={(selectedFlight) => {
+                                setSelectedReturn(selectedFlight);
+                                // Navigate to the booking confirmation or payment page
+                              }}
+                            />
+                          </div>
+                        )}
                     </form>
                 </div>
                
