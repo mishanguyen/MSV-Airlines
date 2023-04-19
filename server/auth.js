@@ -32,7 +32,7 @@ auth.post("/signup", async (req, res) => {
 
     // Determine user type and insert into appropriate table
     const userId = newUser.rows[0].id;
-
+    
     if (userType === "customer") {
       console.log(newUser);
       const newCustomer = await pool.query(
@@ -41,8 +41,8 @@ auth.post("/signup", async (req, res) => {
       );
     } else if (userType === "employee") {
       const newEmployee = await pool.query(
-        "INSERT INTO employee (sid, fname, address, lname) VALUES ($1)",
-        [userId]
+        "INSERT INTO employee (eid, fname, address, lname) VALUES ($1, $2, $3, $4)",
+        [userId, fname, address, lname]
       );
     } else {
       return res.status(400).json({ message: "Invalid user type" });

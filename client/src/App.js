@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+// import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import About from './components/about/About'
 import Header from './components/header/Header';
@@ -10,11 +11,24 @@ import DeptFlights from './components/flight/DepartureFlights';
 import RetFlights from './components/flight/ReturnFlights';
 
 function App() {
+  const user =localStorage.getItem("token")
+  // const [data, setdata] = React.useState(null);
+  // React.useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5000/api/user/userinfo", {
+  //       headers: {
+  //         Authorization: `Bearer ${user}`,
+  //       },
+  //     })
+  //     .then((response) => setdata(response.data))
+  //     .catch((error) => console.log(error));
+  // },[]);
 
   return (
       <Router>
         <Header />
         <Routes>
+        {!user && <Route path="/" exact element={<LogIn />} />}
         <Route path="/about" exact element={<About />} />
           <Route path="/signup" exact element={<SignUp />}/>
           <Route path="/login" exact element={<LogIn />}/>

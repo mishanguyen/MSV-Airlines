@@ -64,4 +64,6 @@
 
 .errorLogin {
     margin: 1rem;
+    color: red;
+    font-weight: 500;
 }
