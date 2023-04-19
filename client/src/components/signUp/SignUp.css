@@ -76,5 +76,8 @@
 }
 
 .errorSignUp {
+    font-family: 'Montserrat', sans-serif;
+    color: red;
+    font-weight: 500;
     margin: 1rem;
 }

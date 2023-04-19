@@ -25,7 +25,7 @@ function SignUp() {
     };
     console.log(data);
     try {
-      const url = "http://localhost:6000/api/users/signup";
+      const url = "http://localhost:5000/api/users/signup";
       const { data: res } = await axios.post(url, data);
       localStorage.setItem("token", res.data);
       navigate("/");
@@ -39,12 +39,18 @@ function SignUp() {
       <div className="SignUpContainer">
         <h1>Sign Up</h1>
         <form className="SignUpForm" onSubmit={handleSignup}>
+          {err && (
+            <div className="errorSignUp">
+              Sorry, username already taken.
+            </div>
+          )}
           <div className="DataInput">
             <label>Username: </label>
             <input
               type="text"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
+              required
             />
           </div>
           <div className="DataInput">
@@ -53,6 +59,7 @@ function SignUp() {
               type = "text" 
               value = {fname} 
               onChange={(event) => setFname(event.target.value)}
+              required
             />
           </div>
           <div className="DataInput">
@@ -61,6 +68,7 @@ function SignUp() {
               type = "text" 
               value = {lname} 
               onChange={(event) => setLname(event.target.value)}
+              required
             />
           </div>
           <div className="DataInput">
@@ -69,6 +77,7 @@ function SignUp() {
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              required
             />
           </div>
           <div className="DataInput">
@@ -81,7 +90,7 @@ function SignUp() {
           </div>
           <div className="DataInput">
             <label>Role: </label>
-            <select value={userType} onChange={(event) => setUserType(event.target.value)}>
+            <select value={userType} onChange={(event) => setUserType(event.target.value)} required>
               <option value="">Select role</option>
               <option value="customer">Customer</option>
               <option value="employee">Employee</option>
@@ -94,11 +103,6 @@ function SignUp() {
                 onSubmit={handleSignup}
               ></input>
             </div>
-          {err && (
-            <span className="errorSignUp">
-              Error registering the user.
-            </span>
-          )}
         </form>
       </div>
     </div>
