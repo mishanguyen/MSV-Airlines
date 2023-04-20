@@ -9,6 +9,7 @@ import LogIn from './components/logIn/LogIn';
 import Booking from './components/flight/BookFlights';
 import DeptFlights from './components/flight/DepartureFlights';
 import RetFlights from './components/flight/ReturnFlights';
+import BookingConfirm from './components/flight/BookingConfirm';
 
 function App() {
   const user =localStorage.getItem("token")
@@ -35,6 +36,7 @@ function App() {
           <Route path="/" exact element={<Booking />}/>
           <Route path="/departure/*" exact element={<DeptFlights />} />
           <Route path="/return" exact element={<RetFlights />} />
+          <Route path="/confirmation" exact element={<BookingConfirm />} />
         </Routes>
         <Footer />
       </Router>

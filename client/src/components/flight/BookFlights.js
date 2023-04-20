@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './BookFlights.css';
 import ToggleSwitch from './ToggleSwitch';
-import DepartureFlights from './DepartureFlights';
-import ReturnFlights from './ReturnFlights';
 
 function Flights() {
     const [origin, setOrigin] = useState('');
@@ -17,9 +15,6 @@ function Flights() {
     const [destinations, setDestinations] = useState([]);
     const [flights, setFlights] = useState([]);
     const navigate = useNavigate();
-    const [bookingStep, setBookingStep] = useState('search');
-    const [selectedDeparture, setSelectedDeparture] = useState(null);
-    const [selectedReturn, setSelectedReturn] = useState(null);
 
     useEffect(() => {
         const today = new Date().toISOString().split("T")[0];
@@ -61,31 +56,29 @@ function Flights() {
     const handleReturnDateChange = (event) => {
         setReturnDate(event.target.value);
     };
-
+    
     const handleSearch = async (event) => {
         event.preventDefault();
         try {
           let url = `http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
-            // if (isRoundTrip) {
-            //     url += `&returnDate=${returnDate}`;
-            // }
             const response = await axios.get(url);
             const departureFlights = response.data.rows;
-            let returnFlights = [];
+            let returnFlights = []
             if (isRoundTrip) {
                 // Fetch return flights
                 const returnUrl = `http://localhost:5000/api/flights/flights?origin=${destination}&destination=${origin}&departureDate=${returnDate}`;
                 const returnResponse = await axios.get(returnUrl);
                 returnFlights = returnResponse.data.rows;
             }
-            setFlights([...departureFlights, ...returnFlights]);
-            const allFlights = [...departureFlights, ...returnFlights]
-            // navigate to the results page with flights as state
+            const allFlights = [...departureFlights, ...returnFlights];
+            setFlights(allFlights);
             navigate('/departure', { state: {allFlights: allFlights, origin: origin, destination: destination, departDate: departDate, returnDate: returnDate } });
         } catch (error) {
             console.error(error);
         }
     };
+
+
 
   //   const handleSearch = async (event) => {
   //     event.preventDefault();
@@ -167,22 +160,20 @@ function Flights() {
                                 />
                             </div>
                         )}
-                        {bookingStep === 'search' && (
-                          <div className='buttonContainer'>
-                            <button type='submit'>
-                                Search
-                            </button>
-                            <button onClick={() => {
-                                const temp = origin;
-                                setOrigin(destination);
-                                setDestination(temp);
-                            }}>
-                              Switch Origin/Destination
-                            </button>
-                          </div>
-                        )}
+                        <div className='buttonContainer'>
+                          <button type='submit'>
+                              Search
+                          </button>
+                          <button onClick={() => {
+                              const temp = origin;
+                              setOrigin(destination);
+                              setDestination(temp);
+                          }}>
+                            Switch Origin/Destination
+                          </button>
+                        </div>
           
-                        {bookingStep === 'departureFlights' && (
+                        { /*{bookingStep === 'departureFlights' && (
                           <div>
                             <DepartureFlights
                               flights={flights}
@@ -219,7 +210,7 @@ function Flights() {
                               }}
                             />
                           </div>
-                        )}
+                        )} */}
                     </form>
                 </div>
                

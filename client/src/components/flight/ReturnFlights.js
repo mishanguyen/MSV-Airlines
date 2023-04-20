@@ -28,7 +28,7 @@ function RetFlights() {
             <p>Duration: {flight.duration}</p>
             <button onClick={() => {
                     setSelectedReturn(flight);
-                    navigate("/return", { 
+                    navigate("/confirmation", { 
                       state: { 
                         allFlights: allFlights, 
                         origin: origin, 
@@ -36,7 +36,7 @@ function RetFlights() {
                         departDate: departDate, 
                         returnDate: returnDate, 
                         selectedDeparture: selectedDeparture, 
-                        selectedReturn: selectedReturn 
+                        selectedReturn: flight
                       }
                     })
             }}

@@ -25,10 +25,10 @@ function Header() {
                     <li>
                         <a href='/about'>About Us</a>
                     </li>
-
-                    <li>
+                    
+                    {isLoggedIn && (<li>
                         <a href='/myflight'>My Flight</a>
-                    </li>
+                    </li>)}
 
                     <li>
                         <a href='/contact'>Contact Us</a>

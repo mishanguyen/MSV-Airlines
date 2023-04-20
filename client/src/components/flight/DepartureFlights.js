@@ -18,7 +18,7 @@ function DeptFlights() {
     if (returnFlights.length === 0) {
         oneWay = 1;
     }
-    const [selectedDeparture, setSelectedDeparture] = useState('');
+    const [selectedDeparture, setSelectedDeparture] = useState(undefined);
     const navigate = useNavigate();
     return (
         <div>
@@ -34,7 +34,7 @@ function DeptFlights() {
                     <p>Duration: {flight.duration}</p>
                     <button onClick={() => {
                         setSelectedDeparture(flight);
-                        {!oneWay &&
+                        !oneWay &&
                             navigate("/return", { 
                                 state: { 
                                     allFlights: allFlights, 
@@ -42,10 +42,21 @@ function DeptFlights() {
                                     destination: destination, 
                                     departDate: departDate, 
                                     returnDate: returnDate, 
-                                    selectedDeparture: selectedDeparture 
+                                    selectedDeparture: flight
                                 }
                             })
-                        }
+                        oneWay && (
+                            navigate("/confirmation", { 
+                                state: { 
+                                    allFlights: allFlights, 
+                                    origin: origin, 
+                                    destination: destination, 
+                                    departDate: departDate, 
+                                    returnDate: returnDate, 
+                                    selectedDeparture: flight, 
+                                }
+                            })
+                        )
                     }}
                     >Select
                     </button>

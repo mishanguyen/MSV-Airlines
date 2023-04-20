@@ -90,17 +90,17 @@ const pool = require('./dmbs');
  
 // async function main() {
 //     const airports = await getAirports();
-//     const startDate = new Date('2023-04-26');
-//     const endDate = new Date('2023-04-28');
+//     const startDate = new Date('2023-04-29');
+//     const endDate = new Date('2023-04-29');
 
 //     for (let day = startDate; day <= endDate; day.setDate(day.getDate() + 1)) {
-//         for (let i = 0; i < airports.length; i++) {
+//         for (let i = 1; i < airports.length; i++) {
 //             for (let j = i + 1; j < airports.length; j++) {
 //                 const origin = airports[i];
 //                 const destination = airports[j];
 //                 const flights = await getFlights(origin, destination, day.toISOString().substring(0, 10), day.toISOString().substring(0, 10));
 //                 await delay(1100);
-//                 if (flights.length > 0) {
+//                 if (flights) {
 //                     await storeFlights(flights);
 //                 } else {
 //                     console.log('no flights');
