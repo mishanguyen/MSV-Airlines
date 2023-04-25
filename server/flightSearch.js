@@ -72,4 +72,26 @@ flights.get('/destinations', async (req, res) => {
     });
 });
 
+
+flights.post('/confirmbooking', async (req,res) => {
+    const jsonData = JSON.parse(JSON.stringify(req.body))
+    try{
+        console.log(jsonData)
+        const departureData = jsonData.departureData
+        const query = "INSERT INTO ticket (price, purchaser, flightid, origin, destination, departuretime, arrivaltime) VALUES ($1, $2, $3, $4, $5, $6, $7) returning bookingid"
+        const departureFlight = await pool.query(query, [departureData.price, departureData.custid, departureData.flightid, 
+            departureData.origin, departureData.destination, departureData.departuretime, departureData.arrivaltime])
+        console.log("flight:", departureFlight.rows[0].bookingid)
+        if (jsonData.returnData){
+            const returnData = jsonData.returnData
+            const returnFlight = await pool.query(query, [returnData.price, returnData.custid, returnData.flightid,
+            returnData.origin, returnData.destination, returnData.departuretime, returnData.arrivaltime])
+            console.log("return:", returnFlight.rows[0].bookingid)
+        }
+    }
+    catch (err){
+        console.log(err)
+    }
+
+})
 module.exports = flights;

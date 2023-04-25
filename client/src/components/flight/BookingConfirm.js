@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 function BookingConfirm({ loggeduser }) {
   const location = useLocation();
@@ -13,6 +14,30 @@ function BookingConfirm({ loggeduser }) {
   let oneWay = 1;
   if (selectedReturn) {
     oneWay = 0;
+  }
+
+  const handleConfirm = async (event) => {
+    console.log(event)
+    const departureData = {price: selectedDeparture.price, custid: loggeduser?.custid, flightid: selectedDeparture.flightid, 
+      origin: selectedDeparture.origin, destination: selectedDeparture.destination, 
+      departuretime: selectedDeparture.departuretime, arrivaltime: selectedDeparture.arrivaltime}
+    console.log(departureData)
+    let data = {departureData: departureData}
+    if (!oneWay){
+      const returnData = {price: selectedReturn.price, custid: loggeduser?.custid, flightid: selectedReturn.flightid,
+      origin: selectedReturn.origin, destination: selectedReturn.destination, 
+    departuretime: selectedReturn.departuretime, arrivaltime: selectedReturn.arrivaltime}
+        data = {...data, returnData: returnData}
+    }
+    console.log("DATA:", data)
+    const url = "http://localhost:5200/api/flights/confirmbooking"
+    await axios.post(url, data)
+    .then((res) => {
+      console.log(res)
+    }).catch((err) =>{
+      console.log(err)
+    })
+
   }
 
   return (
@@ -37,6 +62,9 @@ function BookingConfirm({ loggeduser }) {
             .replace("T", " ")
             .substring(0, 16)}
         </p>
+        <p>
+          Price: ${selectedDeparture.price}
+        </p>
       </div>
       {!oneWay && (
         <div className="returnFlight">
@@ -48,15 +76,18 @@ function BookingConfirm({ loggeduser }) {
             Route: {selectedReturn.origin} - {selectedReturn.destination}
           </p>
           <p>
-            Departure Time: {selectedReturn.departuretime.substring(0, 16)}
+            Departure Time: {selectedReturn.departuretime.substring(0, 16).replace("T", " ")}
           </p>
           <p>
-            Arrival Time: {selectedReturn.arrivaltime.substring(0, 16)}
+            Arrival Time: {selectedReturn.arrivaltime.substring(0, 16).replace("T", " ")}
+          </p>
+          <p>
+            Price: ${selectedReturn.price}
           </p>
         </div>
       )}
       <div className="confirmButton">
-        <button>Confirm Booking</button>
+        <button onClick={handleConfirm}>Confirm Booking</button>
       </div>
     </div>
   );
