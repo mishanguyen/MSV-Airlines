@@ -58,21 +58,21 @@ function App() {
   const user = localStorage.getItem("token")
   const [loggeduser, setUser] = useState(undefined);
   
-  useEffect(() => {
-    if (user) {
-      const fetchUserData = async () => {
-        try {
-          const { data: res } = await axios.post("http://localhost:5200/api/users/getuserinfo", { token: user });
-          setUser(res);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      fetchUserData();
-    } else {
-      setUser(undefined);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     const fetchUserData = async () => {
+  //       try {
+  //         const { data: res } = await axios.post("http://localhost:5200/api/users/getuserinfo", { token: user });
+  //         setUser(res);
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     };
+  //     fetchUserData();
+  //   } else {
+  //     setUser(undefined);
+  //   }
+  // }, [user]);
   
 
   return (
@@ -90,7 +90,7 @@ function App() {
         <Route path="/departure/*" exact element={<DeptFlights />} />
         <Route path="/return/*" exact element={<RetFlights/>} />
         <Route path="/confirmation" exact element={<BookingConfirm loggeduser={loggeduser} />} />
-        <Route path="/myflights" exact element={<MyFlights/>} />
+        <Route path="/myflights" exact element={<MyFlights loggeduser={loggeduser}/>} />
       </Routes>
       <Footer />
     </Router>

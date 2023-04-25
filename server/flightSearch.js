@@ -72,7 +72,6 @@ flights.get('/destinations', async (req, res) => {
     });
 });
 
-
 flights.post('/confirmbooking', async (req,res) => {
     const jsonData = JSON.parse(JSON.stringify(req.body))
     try{
@@ -92,6 +91,19 @@ flights.post('/confirmbooking', async (req,res) => {
     catch (err){
         console.log(err)
     }
+})
 
+flights.post('/bookedflights', async (req, res) => {
+    try{
+        const {purchaser} = req.body
+        console.log("WAHAT",purchaser)
+        const query = "SELECT * FROM ticket WHERE purchaser = $1"
+        const tickets = await pool.query(query, [purchaser])
+        console.log(tickets.rows)
+        res.send(tickets.rows)
+    }
+    catch (err){
+        console.log(err)
+    }
 })
 module.exports = flights;

@@ -27,9 +27,8 @@ function Header({loggeduser, setUser}) {
                     </li>
                     
                     {isLoggedIn && (<li>
-                        <a href='/myflight'>My Flight</a>
+                        <a href='/myflights'>My Flight</a>
                     </li>)}
-
                     <li>
                         <a href='/contact'>Contact Us</a>
                     </li>

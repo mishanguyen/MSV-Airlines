@@ -61,7 +61,6 @@ auth.post('/login', async (req,res) => {
         "SELECT * FROM login WHERE username = $1",
         [username]
       );
-      console.log(user.rows[0].type)
 
       if (user) {
         const hashedPassword = user.rows[0].password;
@@ -90,10 +89,13 @@ auth.post('/getuserinfo', async (req, res) => {
     if (user.rows[0].type === 'customer') {
       const userinfo = await pool.query("SELECT * FROM login JOIN customer on login.id = customer.custid AND login.username = $1", [username]);
       console.log(userinfo.rows[0]);
+      // req.session.user = userinfo.rows[0]
       res.send(userinfo.rows[0]);
+
     } else if (user.rows[0].type === 'employee') {
       const userinfo = await pool.query("SELECT * FROM login JOIN employee ON login.id = employee.eid AND login.username = $1", [username]);
       console.log(userinfo.rows[0]);
+      // req.session.user = userinfo.rows[0]
       res.send(userinfo.rows[0]);
     }
   } catch (err) {

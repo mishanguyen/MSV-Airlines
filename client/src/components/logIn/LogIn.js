@@ -53,7 +53,8 @@ function LogIn ({loggeduser, setUser}){
         .post("http://localhost:5200/api/users/getuserinfo", data)
         .then((res) => {
           console.log(res.data);
-          setUser(res.data);
+          localStorage.setItem("user", JSON.stringify(res.data))
+          setUser(JSON.stringify(res.data));
           navigate('/'); // Navigate to the home page
         })
         .catch((err) => {
