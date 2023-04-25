@@ -1,0 +1,13 @@
+.about-section {
+    display: flex;
+    margin: 1rem 10rem 0 12rem;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.about-section h1 {
+    margin-bottom: 13rem;
+}
+
+

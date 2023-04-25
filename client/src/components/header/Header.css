@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    color: rgb(34, 84, 97);
+}
+
+.nav {
+    background-color: white;
+    /* background-color: #A5D3E7; */
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    gap: 15rem;
+    box-shadow: 0 10px 100px rgba(0, 0, 0, 0.1);
+}
+
+.airline-name {
+    font-size: 3rem;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+    font-size: 1rem;
+}
+
+.nav a {
+    text-decoration: none;
+}
+
+.logo {
+    width: 250px;
+}
