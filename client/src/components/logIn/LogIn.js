@@ -3,7 +3,7 @@ import React from "react";
 import "./LogIn.css";
 import axios from "axios";
 import { useNavigate} from 'react-router-dom';
-
+import { Link, Alert} from "@mui/material";
 
 function LogIn ({loggeduser, setUser}){
   const [err, setErr] = React.useState(false);
@@ -96,9 +96,12 @@ function LogIn ({loggeduser, setUser}){
                 required
               ></input>
             </div>
-            {err && <span className="errorLogin">Email or password might be incorrect. Please try again.</span>}
+            {err && <Alert classname="errorLogin" variant="outlined" severity="error">Incorrect user credentials. Please try again.</Alert>}
             <div className="LoginButton">
               <input type="submit" value="Log in" className="submitBtn"></input>
+            </div>
+            <div className="SignUpButton">
+              <Link href="/signup" variant="body">Don't have an account? Sign up</Link>
             </div>
           </form>
         </div>
