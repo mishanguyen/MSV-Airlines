@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import { useState } from "react"
+import { useNavigate, useLocation } from "react-router-dom"
 import axios from "axios"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
@@ -7,13 +8,26 @@ import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import { Button, Checkbox } from "@mui/material"
+import './MyFlights.css'
 function MyFlights( {loggeduser} ) {
     const user = JSON.parse(localStorage.getItem('user'))
     const [flights, setFlights] = useState([])
     const [selected, setSelected] = useState([])
-
+    const navigate = useNavigate()
+    const location = useLocation()
+    
+    const selectAll = (event) => {
+        const status = event.target.checked
+        console.log(event.target.checked)
+        if (status){
+            setSelected([...flights])
+        }
+        else{
+            setSelected([])
+        }
+    }
     const handleChange = (flight) => {
-        console.log(flight)
+        // console.log(flight)
         if (selected.includes(flight)){
             setSelected(selected.filter((selected) => selected != flight))
         }
@@ -21,8 +35,27 @@ function MyFlights( {loggeduser} ) {
             setSelected([...selected, flight])
         }
     }
-    const handleSubmit = async () =>{
-        console.log(selected)
+    const handleSubmit = async (event) =>{
+        console.log(event.target.id)
+        if (event.target.id === "modify"){
+            navigate("/editflights", {state: {flights: selected}})
+        }
+        else{
+            const data = {purchaser: user.custid, tickets: selected.map(flight => flight.bookingid)}
+            const url = "http://localhost:5200/api/flights/deleteflights"
+            await axios.post(url, data)
+            .then((res) => {
+                console.log(res.data)
+                let updateFlights = flights;
+                for (const deleted of selected){
+                    updateFlights = updateFlights.filter((flight) => flight !== deleted)
+                }
+                setFlights(updateFlights)
+                setSelected([])
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
     }
     const getFlights = async () => {
         try{
@@ -60,7 +93,7 @@ return(
                             <TableCell>Departure Time</TableCell>
                             <TableCell>Arrival Time</TableCell>
                             <TableCell>Price</TableCell>
-                            <TableCell>Select<Checkbox ></Checkbox></TableCell>
+                            <TableCell>Select<Checkbox onChange={selectAll}></Checkbox></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -78,11 +111,35 @@ return(
                         ))}
                     </TableBody>
                 </Table>
+                <div className="buttons">
                 <Button 
                 variant="contained"
                 disabled={!selected.length}
                 onClick={handleSubmit}
-                fullWidth>Submit</Button></>
+                id="modify"
+                style={{
+                    borderRadius: 35,
+                    backgroundColor: "#21b6ae",
+                    padding: "10px 20px",
+                    fontSize: "15px",
+                    paddingTop: "10px",
+                    marginRight: "50px",
+                }}
+                >Modify Flights</Button>
+                <Button 
+                variant="contained"
+                disabled={!selected.length}
+                onClick={handleSubmit}
+                id="delete"
+                style={{
+                    borderRadius: 35,
+                    backgroundColor: "#c4000a",
+                    padding: "10px 20px",
+                    fontSize: "15px",
+                    paddingTop: "10px",
+                    marginRight: "50px"
+                }}
+                >Delete Flights</Button></div></>
             ) : <h4>No flights to display!</h4>}
         </div>
 

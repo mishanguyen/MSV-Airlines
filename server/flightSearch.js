@@ -98,14 +98,29 @@ flights.post('/confirmbooking', async (req,res) => {
 flights.post('/bookedflights', async (req, res) => {
     try{
         const {purchaser} = req.body
-        console.log("WAHAT",purchaser)
         const query = "SELECT * FROM ticket WHERE purchaser = $1"
         const tickets = await pool.query(query, [purchaser])
-        console.log(tickets.rows)
+        // console.log(tickets.rows)
         res.send(tickets.rows)
     }
     catch (err){
         console.log(err)
+    }
+})
+
+flights.post('/deleteflights', async (req, res) => {
+    try {
+        const {purchaser, tickets} = req.body
+        const ids = tickets.map(ticket => parseInt(ticket))
+        const query = "DELETE FROM ticket WHERE purchaser = $1 AND bookingid = ANY($2::int[])"
+        const values = [purchaser, ids]
+        const results = await pool.query(query, values)
+        console.log(`Deleted ${results.rowCount} flights for User: ${purchaser}`)
+        res.json(results.rowCount)
+    }
+    catch (err){
+        console.log(err)
+        res.json(err)
     }
 })
 module.exports = flights;

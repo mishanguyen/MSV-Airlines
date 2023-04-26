@@ -51,6 +51,7 @@ import BookingConfirm from './components/flight/BookingConfirm'
 import DeptFlights from './components/flight/DepartureFlights';
 import RetFlights from './components/flight/ReturnFlights';
 import MyFlights from './components/MyFlights/MyFlights'
+import EditFlights from './components/MyFlights/EditFlights';
 import axios from 'axios';
 
 
@@ -91,6 +92,7 @@ function App() {
         <Route path="/return/*" exact element={<RetFlights/>} />
         <Route path="/confirmation" exact element={<BookingConfirm loggeduser={loggeduser} />} />
         <Route path="/myflights" exact element={<MyFlights loggeduser={loggeduser}/>} />
+        <Route path="/editflights" exact element={<EditFlights/>}/>
       </Routes>
       <Footer />
     </Router>

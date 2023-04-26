@@ -28,7 +28,7 @@ function BookingConfirm({ loggeduser }) {
     if (!oneWay){
       const returnData = {price: selectedReturn.price, custid: user.custid, flightid: selectedReturn.flightid,
       origin: selectedReturn.origin, destination: selectedReturn.destination, 
-    departuretime: selectedReturn.departuretime, arrivaltime: selectedReturn.arrivaltime}
+      departuretime: selectedReturn.departuretime, arrivaltime: selectedReturn.arrivaltime}
         data = {...data, returnData: returnData}
     }
     console.log("DATA:", data)
@@ -93,7 +93,6 @@ function BookingConfirm({ loggeduser }) {
       )}
       <div className="confirmButton">
         <button onClick={handleConfirm}>Confirm Booking</button>
-        {/* {message && <Alert severity={severity}>{message}</Alert>} */}
       </div>
       {message && <Alert severity={`${severity}`}>{message}</Alert>}
     </div>
