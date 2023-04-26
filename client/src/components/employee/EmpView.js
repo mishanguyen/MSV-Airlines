@@ -5,7 +5,7 @@ import "./EmpView.css";
 function EmpView() {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
-    const [custId, setCustId] = useState(1);
+    const [custId, setCustId] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
