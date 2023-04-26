@@ -2,3 +2,41 @@
 .flights{
     margin: 10px
 }
+.flights-list{
+    width: 500px;
+}
+
+.editbutton input{
+    padding: 0.5rem 2rem;
+    background-color: #0E1215;
+    border: 1px #0E1215 solid;
+    border-radius: 5px;
+    color: white;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.editbutton {
+    margin: 0.25rem;
+}
+
+.editbutton input:hover {
+    opacity: 0.7;
+}
+
+.editbutton input:active {
+    opacity: 0.9;
+}
+
+.userInput {
+    display: flex;
+    flex-direction: row;
+}
+
+.userInput input {
+    margin-left: 10px;
+}
+
+.userInput label {
+    font-size: 15px;
+}

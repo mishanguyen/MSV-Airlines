@@ -123,4 +123,21 @@ flights.post('/deleteflights', async (req, res) => {
         res.json(err)
     }
 })
+
+flights.post('/updateflight', async (req, res) => {
+    try {
+        const jsonData = JSON.parse(JSON.stringify(req.body))
+        const query = "UPDATE ticket SET flightid = $1, departuretime = $2, arrivaltime = $3, price= $4 WHERE purchaser = $5 AND bookingID = $6"
+        console.log(jsonData)
+        console.log(jsonData.departureData.flightid)
+        const values = [jsonData.departureData.flightid, jsonData.departureData.departuretime, jsonData.departureData.arrivaltime, jsonData.departureData.price, jsonData.departureData.custid, jsonData.bookingID]
+        console.log(values)
+        const results = await pool.query(query, values)
+        console.log(results)
+        res.json(results.rowCount)
+    } catch (err){
+        console.log(err)
+        res.json(err)
+    }
+})
 module.exports = flights;
