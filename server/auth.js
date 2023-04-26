@@ -8,16 +8,6 @@ auth.post("/signup", async (req, res) => {
   const { username, password, userType, fname, lname, address } = req.body;
   console.log(req.body);
   try {
-    // Check if user already exists
-    const existingUser = await pool.query(
-      "SELECT * FROM login WHERE username = $1",
-      [username]
-    );
-
-    if (existingUser.rows.length > 0) {
-      return res.status(400).json({ message: "Username already taken" });
-    }
-
     // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -103,5 +93,43 @@ auth.post('/getuserinfo', async (req, res) => {
     res.send({ message: err });
   }
 });
+
+// auth.get('/empview', async (req, res) => {
+//   try {
+//     const empView = await pool.query('SELECT * FROM emp_view');
+//     res.send(empView.rows);
+//   } catch (err) {
+//     console.error(`Error fetching employee view: ${err.message}`);
+//     res.status(500).json({ message: "Error fetching employee view" });
+//   }
+// });
+
+// auth.get('/empview', async (req, res) => {
+//   try {
+//     const custId = req.query.custId;
+//     const empView = await pool.query('SELECT * FROM emp_view WHERE custId = $1', [custId]);
+//     res.send(empView.rows);
+//   } catch (err) {
+//     console.error('No info for user')
+//   }
+// });
+
+auth.get('/empview/:custId?', async (req, res) => {
+  try {
+    const custId = req.params.custId;
+    let empView;
+    if (custId) {
+      empView = await pool.query('SELECT * FROM emp_view WHERE custid = $1', [custId]);
+    } else {
+      empView = await pool.query('SELECT * FROM emp_view');
+    }
+    res.send(empView.rows);
+  } catch (err) {
+    console.error(`Error fetching employee view: ${err.message}`);
+    res.status(500).json({ message: "Error fetching employee view" });
+  }
+});
+
+
 
 module.exports = auth;

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-
-// import axios from 'axios';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import About from './components/about/About'
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
@@ -13,6 +11,9 @@ import DeptFlights from './components/flight/DepartureFlights';
 import RetFlights from './components/flight/ReturnFlights';
 import MyFlights from './components/MyFlights/MyFlights'
 import EditFlights from './components/MyFlights/EditFlights';
+import EmpView from './components/employee/EmpView';
+import axios from 'axios';
+
 
 function App() {
   const user = localStorage.getItem("token")
@@ -35,6 +36,7 @@ function App() {
         <Route path="/confirmation" exact element={<BookingConfirm loggeduser={loggeduser} />} />
         <Route path="/myflights" exact element={<MyFlights loggeduser={loggeduser}/>} />
         <Route path="/editflights" exact element={<EditFlights/>}/>
+        <Route path="/empview" exact element={<EmpView loggeduser={loggeduser} />} />
       </Routes>
       <Footer />
     </Router>
