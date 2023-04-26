@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Alert } from "@mui/material";
 
@@ -14,19 +14,34 @@ function BookingConfirm({ loggeduser }) {
   const selectedReturn = location.state?.selectedReturn;
   const newDate = location.state?.newDate
   const bookingID = location.state?.bookingID
+  const editedflights = location.state?.editedflights
   const [message, setMessage] = useState('')
   const [severity, setSeverity] = useState('')
+  const [flag, setFlag] = useState(false)
+  const navigate = useNavigate()
   let oneWay = 1;
   if (selectedReturn) {
     oneWay = 0;
   }
 
+  const handleContinue = () => {
+    if (newDate && flag){
+      const flights = editedflights.filter((flight) => flight.bookingid != bookingID)
+      console.log(editedflights)
+      console.log(flights)
+      console.log("hihihihi")
+      navigate("/editflights", {state: {flights: flights}})
+    }
+    else{
+      navigate("/editflights", {state: {flights: editedflights}})
+    }
+  }
   const handleConfirm = async (event) => {
     event.preventDefault()
     const departureData = {price: selectedDeparture.price, custid: user.custid, flightid: selectedDeparture.flightid, 
       origin: selectedDeparture.origin, destination: selectedDeparture.destination, 
       departuretime: selectedDeparture.departuretime, arrivaltime: selectedDeparture.arrivaltime}
-    let data = {departureData: departureData}
+    var data = {departureData: departureData}
     if (!oneWay){
       const returnData = {price: selectedReturn.price, custid: user.custid, flightid: selectedReturn.flightid,
       origin: selectedReturn.origin, destination: selectedReturn.destination, 
@@ -43,6 +58,7 @@ function BookingConfirm({ loggeduser }) {
     .then((res) => {
       if (newDate){
         setMessage("Successfully edited your ticket!")
+        setFlag(true)
       } else{
         setMessage("Successfully booked ticket!")
       }
@@ -103,6 +119,9 @@ function BookingConfirm({ loggeduser }) {
       )}
       <div className="confirmButton">
         <button onClick={handleConfirm}>Confirm Booking</button>
+      </div>
+      <div className="continueButton">
+        <button onClick={handleContinue}>Continue Editing</button>
       </div>
       {message && <Alert severity={`${severity}`}>{message}</Alert>}
     </div>
