@@ -93,7 +93,7 @@ return(
                             <TableCell>Departure Time</TableCell>
                             <TableCell>Arrival Time</TableCell>
                             <TableCell>Price</TableCell>
-                            <TableCell>Select<Checkbox onChange={selectAll}></Checkbox></TableCell>
+                            <TableCell><Checkbox onChange={selectAll}></Checkbox></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
