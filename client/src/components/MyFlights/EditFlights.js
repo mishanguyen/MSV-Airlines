@@ -28,7 +28,7 @@ function EditFlights() {
             await axios.get(url)
             .then((res) =>{
                 if (res.data.rows == 0){
-                    setError("There are not flights available for that date. Please try again!")
+                    setError("There are no flights available for that date. Please try again!")
                 } else{
                     navigate("/departure", {state: {bookingID: ticket.bookingid, allFlights: res.data.rows, origin: ticket.origin, destination: ticket.destination, departDate: departDate, newDate: true}})
                 }

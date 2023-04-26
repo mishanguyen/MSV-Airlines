@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import { Button, Checkbox } from "@mui/material"
 import './MyFlights.css'
+
 function MyFlights( {loggeduser} ) {
     const user = JSON.parse(localStorage.getItem('user'))
     const [flights, setFlights] = useState([])

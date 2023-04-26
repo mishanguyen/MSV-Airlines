@@ -8,16 +8,6 @@ auth.post("/signup", async (req, res) => {
   const { username, password, userType, fname, lname, address } = req.body;
   console.log(req.body);
   try {
-    // Check if user already exists
-    const existingUser = await pool.query(
-      "SELECT * FROM login WHERE username = $1",
-      [username]
-    );
-
-    if (existingUser.rows.length > 0) {
-      return res.status(400).json({ message: "Username already taken" });
-    }
-
     // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
