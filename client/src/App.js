@@ -15,6 +15,7 @@ import RetFlights from './components/flight/ReturnFlights';
 import MyFlights from './components/MyFlights/MyFlights'
 import EditFlights from './components/MyFlights/EditFlights';
 import EmpView from './components/employee/EmpView';
+import './App.css'
 import axios from 'axios';
 
 
@@ -25,6 +26,7 @@ function App() {
   return (
     <Router>
       <Header loggeduser={loggeduser} setUser={setUser}/>
+      <div className='main-content'>
       <Routes>
         <Route
           path="/"
@@ -41,6 +43,7 @@ function App() {
         <Route path="/editflights" exact element={<EditFlights/>}/>
         <Route path="/empview" exact element={<EmpView loggeduser={loggeduser} />} />
       </Routes>
+      </div>
       <Footer />
     </Router>
   )
