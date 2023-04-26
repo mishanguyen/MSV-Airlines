@@ -87,8 +87,10 @@ flights.post('/confirmbooking', async (req,res) => {
             returnData.origin, returnData.destination, returnData.departuretime, returnData.arrivaltime])
             console.log("return:", returnFlight.rows[0].bookingid)
         }
+        res.json(departureFlight.rows[0].bookingid)
     }
     catch (err){
+        res.json(err)
         console.log(err)
     }
 })

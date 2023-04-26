@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { Alert } from "@mui/material";
 
 function BookingConfirm({ loggeduser }) {
+  const user = JSON.parse(localStorage.getItem('user'))
   const location = useLocation();
   const origin = location.state?.origin;
   const destination = location.state?.destination;
@@ -10,21 +12,21 @@ function BookingConfirm({ loggeduser }) {
   const returnDate = location.state?.returnDate;
   const selectedDeparture = location.state?.selectedDeparture;
   const selectedReturn = location.state?.selectedReturn;
-
+  const [message, setMessage] = useState('')
+  const [severity, setSeverity] = useState('')
   let oneWay = 1;
   if (selectedReturn) {
     oneWay = 0;
   }
 
   const handleConfirm = async (event) => {
-    console.log(event)
-    const departureData = {price: selectedDeparture.price, custid: loggeduser?.custid, flightid: selectedDeparture.flightid, 
+    event.preventDefault()
+    const departureData = {price: selectedDeparture.price, custid: user.custid, flightid: selectedDeparture.flightid, 
       origin: selectedDeparture.origin, destination: selectedDeparture.destination, 
       departuretime: selectedDeparture.departuretime, arrivaltime: selectedDeparture.arrivaltime}
-    console.log(departureData)
     let data = {departureData: departureData}
     if (!oneWay){
-      const returnData = {price: selectedReturn.price, custid: loggeduser?.custid, flightid: selectedReturn.flightid,
+      const returnData = {price: selectedReturn.price, custid: user.custid, flightid: selectedReturn.flightid,
       origin: selectedReturn.origin, destination: selectedReturn.destination, 
     departuretime: selectedReturn.departuretime, arrivaltime: selectedReturn.arrivaltime}
         data = {...data, returnData: returnData}
@@ -33,17 +35,20 @@ function BookingConfirm({ loggeduser }) {
     const url = "http://localhost:5200/api/flights/confirmbooking"
     await axios.post(url, data)
     .then((res) => {
+      setMessage("Successfully booked ticket!")
+      setSeverity("success")
       console.log(res)
     }).catch((err) =>{
+      setMessage("Error booking ticket!")
+      setSeverity("error")
       console.log(err)
     })
-
   }
 
   return (
     <div className="confirm-main-container">
       <h2>Booking Confirmation</h2>
-      <p>Customer ID: {loggeduser ? loggeduser.custid : "Not logged in"}</p>
+      <p>Customer ID: {user ? user.custid : "Not logged in"}</p>
       <div className="departureFlight">
         <h3>
           Inbound Flight: {origin} to {destination} on {departDate}
@@ -88,7 +93,9 @@ function BookingConfirm({ loggeduser }) {
       )}
       <div className="confirmButton">
         <button onClick={handleConfirm}>Confirm Booking</button>
+        {/* {message && <Alert severity={severity}>{message}</Alert>} */}
       </div>
+      {message && <Alert severity={`${severity}`}>{message}</Alert>}
     </div>
   );
 }

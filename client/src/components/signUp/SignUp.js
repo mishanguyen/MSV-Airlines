@@ -16,11 +16,11 @@ function SignUp() {
   const handleSignup = async (e) => {
     e.preventDefault();
     const data = {
-      username: username, 
+      username: username,
       password: password, 
       userType: userType, 
-      fname: fname, 
-      lname: lname, 
+      fname: fname.replace(/^./, fname[0].toUpperCase()), 
+      lname: lname.replace(/^./, lname[0].toUpperCase()), 
       address: address
     };
     console.log(data);
