@@ -134,7 +134,7 @@ return(
                 id="delete"
                 style={{
                     borderRadius: 35,
-                    backgroundColor: "#c4000a",
+                    backgroundColor: "#92a8d1",
                     padding: "10px 20px",
                     fontSize: "15px",
                     paddingTop: "10px",

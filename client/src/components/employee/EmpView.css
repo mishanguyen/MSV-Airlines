@@ -1,0 +1,4 @@
+th:nth-child(7),
+td:nth-child(7) {
+  display: none;
+}
