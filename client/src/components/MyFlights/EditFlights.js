@@ -20,6 +20,7 @@ function EditFlights() {
     const handleEdit = async (ticket) => {
         console.log(newDeparture)
         console.log(ticket)
+        // const editedflights = flights.filter((flight) => flight != ticket)
         const origin = ticket.origin
         const destination = ticket.destination
         const departDate = newDeparture
@@ -30,7 +31,7 @@ function EditFlights() {
                 if (res.data.rows == 0){
                     setError("There are no flights available for that date. Please try again!")
                 } else{
-                    navigate("/departure", {state: {bookingID: ticket.bookingid, allFlights: res.data.rows, origin: ticket.origin, destination: ticket.destination, departDate: departDate, newDate: true}})
+                    navigate("/departure", {state: {editedflights: flights, bookingID: ticket.bookingid, allFlights: res.data.rows, origin: ticket.origin, destination: ticket.destination, departDate: departDate, newDate: true}})
                 }
                 console.log(res.data.rows)
 

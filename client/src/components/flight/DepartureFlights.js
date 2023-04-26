@@ -10,6 +10,7 @@ function DeptFlights() {
     const returnDate = location.state?.returnDate;
     const newDate = location.state?.newDate
     const bookingID = location.state?.bookingID
+    const editedflights = location.state?.editedflights
     const departureFlights = allFlights.filter(
         (flight) => flight.origin === origin && flight.destination === destination && flight.departuretime.startsWith(departDate)
     );
@@ -57,7 +58,8 @@ function DeptFlights() {
                                     returnDate: returnDate, 
                                     selectedDeparture: flight, 
                                     newDate: newDate,
-                                    bookingID: bookingID
+                                    bookingID: bookingID,
+                                    editedflights: editedflights
                                 }
                             })
                         )
