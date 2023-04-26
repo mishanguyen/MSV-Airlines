@@ -104,4 +104,15 @@ auth.post('/getuserinfo', async (req, res) => {
   }
 });
 
+auth.get('/empview', async (req, res) => {
+  try {
+    const empView = await pool.query('SELECT * FROM emp_view');
+    res.send(empView.rows);
+  } catch (err) {
+    console.error(`Error fetching employee view: ${err.message}`);
+    res.status(500).json({ message: "Error fetching employee view" });
+  }
+});
+
+
 module.exports = auth;
