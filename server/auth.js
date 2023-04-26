@@ -104,15 +104,42 @@ auth.post('/getuserinfo', async (req, res) => {
   }
 });
 
-auth.get('/empview', async (req, res) => {
+// auth.get('/empview', async (req, res) => {
+//   try {
+//     const empView = await pool.query('SELECT * FROM emp_view');
+//     res.send(empView.rows);
+//   } catch (err) {
+//     console.error(`Error fetching employee view: ${err.message}`);
+//     res.status(500).json({ message: "Error fetching employee view" });
+//   }
+// });
+
+// auth.get('/empview', async (req, res) => {
+//   try {
+//     const custId = req.query.custId;
+//     const empView = await pool.query('SELECT * FROM emp_view WHERE custId = $1', [custId]);
+//     res.send(empView.rows);
+//   } catch (err) {
+//     console.error('No info for user')
+//   }
+// });
+
+auth.get('/empview/:custId?', async (req, res) => {
   try {
-    const empView = await pool.query('SELECT * FROM emp_view');
+    const custId = req.params.custId;
+    let empView;
+    if (custId) {
+      empView = await pool.query('SELECT * FROM emp_view WHERE custid = $1', [custId]);
+    } else {
+      empView = await pool.query('SELECT * FROM emp_view');
+    }
     res.send(empView.rows);
   } catch (err) {
     console.error(`Error fetching employee view: ${err.message}`);
     res.status(500).json({ message: "Error fetching employee view" });
   }
 });
+
 
 
 module.exports = auth;
