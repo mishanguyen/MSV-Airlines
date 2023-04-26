@@ -12,6 +12,8 @@ function BookingConfirm({ loggeduser }) {
   const returnDate = location.state?.returnDate;
   const selectedDeparture = location.state?.selectedDeparture;
   const selectedReturn = location.state?.selectedReturn;
+  const newDate = location.state?.newDate
+  const bookingID = location.state?.bookingID
   const [message, setMessage] = useState('')
   const [severity, setSeverity] = useState('')
   let oneWay = 1;
@@ -31,11 +33,19 @@ function BookingConfirm({ loggeduser }) {
       departuretime: selectedReturn.departuretime, arrivaltime: selectedReturn.arrivaltime}
         data = {...data, returnData: returnData}
     }
-    console.log("DATA:", data)
-    const url = "http://localhost:5200/api/flights/confirmbooking"
+    if (newDate){
+      var url = "http://localhost:5200/api/flights/updateflight"
+      data = {...data, bookingID: bookingID}
+    } else{
+      var url = "http://localhost:5200/api/flights/confirmbooking"
+    }
     await axios.post(url, data)
     .then((res) => {
-      setMessage("Successfully booked ticket!")
+      if (newDate){
+        setMessage("Successfully edited your ticket!")
+      } else{
+        setMessage("Successfully booked ticket!")
+      }
       setSeverity("success")
       console.log(res)
     }).catch((err) =>{
