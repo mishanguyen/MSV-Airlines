@@ -129,5 +129,3 @@ function BookingConfirm({ loggeduser }) {
 }
 
 export default BookingConfirm;
-
-export default BookingConfirm; 
