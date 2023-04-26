@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useState } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
     import Table from "@mui/material/Table"
     import TableBody from "@mui/material/TableBody"
@@ -15,7 +15,6 @@ function MyFlights( {loggeduser} ) {
     const [flights, setFlights] = useState([])
     const [selected, setSelected] = useState([])
     const navigate = useNavigate()
-    const location = useLocation()
     
     const selectAll = (event) => {
         const status = event.target.checked
@@ -30,7 +29,7 @@ function MyFlights( {loggeduser} ) {
     const handleChange = (flight) => {
         // console.log(flight)
         if (selected.includes(flight)){
-            setSelected(selected.filter((selected) => selected != flight))
+            setSelected(selected.filter((selected) => selected !== flight))
         }
         else{
             setSelected([...selected, flight])
