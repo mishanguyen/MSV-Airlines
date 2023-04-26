@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "./EmpView.css";
 
 function EmpView() {
   const [data, setData] = useState([]);
+  const [custId, setCustId] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,9 +14,25 @@ function EmpView() {
     fetchData();
   }, []);
 
+  const filterData = () => {
+    const filteredData = data.filter((row) => row.custid === parseInt(custId));
+    setData(filteredData);
+  };
+
   return (
     <div>
       <h1>Employee View</h1>
+      <div className="filter-box">
+        <label htmlFor="cust-id">Customer ID:</label>
+        <input
+          type="text"
+          id="cust-id"
+          name="cust-id"
+          value={custId}
+          onChange={(e) => setCustId(e.target.value)}
+        />
+        <button onClick={filterData}>Filter</button>
+      </div>
       <table>
         <thead>
           <tr>
