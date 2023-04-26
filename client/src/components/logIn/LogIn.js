@@ -2,11 +2,15 @@ import { useState } from "react";
 import React from "react";
 import "./LogIn.css";
 import axios from "axios";
+import { useNavigate} from 'react-router-dom';
+import { Link, Alert} from "@mui/material";
 
-function LogIn() {
+function LogIn ({loggeduser, setUser}){
   const [err, setErr] = React.useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -17,19 +21,29 @@ function LogIn() {
   };
 
   const handleSubmit = async (e) => {
+    console.log("clicked submit");
     e.preventDefault();
-    const username = e.target[0].value;
-    const password = e.target[1].value;
-    const data = { username, password };
     try {
-      const url = "http://localhost:5000/api/users/login";
-      const { data: res } = await axios.post(url,data);
+      const data = { username, password };
+      const url = "http://localhost:5200/api/users/login";
+      const { data: res } = await axios.post(url, data);
       localStorage.setItem("token", res.data);
-      window.location="/"
+      await axios
+        .post("http://localhost:5200/api/users/getuserinfo", data)
+        .then((res) => {
+          console.log(res.data);
+          localStorage.setItem("user", JSON.stringify(res.data))
+          setUser(JSON.stringify(res.data));
+          navigate('/'); // Navigate to the home page
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } catch (err) {
       setErr(true);
     }
   };
+  
 
   return (
     <div className="LoginPage">
@@ -61,9 +75,12 @@ function LogIn() {
                 required
               ></input>
             </div>
-            {err && <span className="errorLogin">Email or password might be incorrect. Please try again.</span>}
+            {err && <Alert classname="errorLogin" variant="outlined" severity="error">Incorrect user credentials. Please try again.</Alert>}
             <div className="LoginButton">
               <input type="submit" value="Log in" className="submitBtn"></input>
+            </div>
+            <div className="SignUpButton">
+              <Link href="/signup" variant="body">Don't have an account? Sign up</Link>
             </div>
           </form>
         </div>

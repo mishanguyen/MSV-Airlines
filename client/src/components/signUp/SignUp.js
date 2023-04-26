@@ -16,16 +16,16 @@ function SignUp() {
   const handleSignup = async (e) => {
     e.preventDefault();
     const data = {
-      username: username, 
+      username: username,
       password: password, 
       userType: userType, 
-      fname: fname, 
-      lname: lname, 
+      fname: fname.replace(/^./, fname[0].toUpperCase()), 
+      lname: lname.replace(/^./, lname[0].toUpperCase()), 
       address: address
     };
     console.log(data);
     try {
-      const url = "http://localhost:5000/api/users/signup";
+      const url = "http://localhost:5200/api/users/signup";
       const { data: res } = await axios.post(url, data);
       localStorage.setItem("token", res.data);
       navigate("/");

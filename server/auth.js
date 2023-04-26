@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('./dmbs');
 
-//sign up options for customers  
 auth.post("/signup", async (req, res) => {
   const { username, password, userType, fname, lname, address } = req.body;
   console.log(req.body);
@@ -29,57 +28,34 @@ auth.post("/signup", async (req, res) => {
       [username, hashedPassword, userType]
     );
 
-
     // Determine user type and insert into appropriate table
     const userId = newUser.rows[0].id;
-    
+
     if (userType === "customer") {
-      console.log(newUser);
       const newCustomer = await pool.query(
-        "INSERT INTO customer (custid, fname, address, lname) VALUES ($1, $2, $3, $4)",
-        [userId, fname, address, lname]
+        "INSERT INTO customer (custid, fname, lname, address) VALUES ($1, $2, $3, $4)",
+        [userId, fname, lname, address]
       );
     } else if (userType === "employee") {
       const newEmployee = await pool.query(
-        "INSERT INTO employee (eid, fname, address, lname) VALUES ($1, $2, $3, $4)",
-        [userId, fname, address, lname]
+        "INSERT INTO employee (eid, fname, lname, address) VALUES ($1, $2, $3, $4)",
+        [userId, fname, lname, address]
       );
     } else {
       return res.status(400).json({ message: "Invalid user type" });
     }
 
+    console.log(`User with username ${username} created successfully`);
     res.json({ message: "User created successfully" });
   } catch (err) {
-    console.error(err.message);
+    console.error(`Error creating user: ${err.message}`);
     res.status(500).json({ message: "Error creating user" });
   }
 });
 
-
-// auth.post('/login', (req, res) => {
-//   const { username, password } = req.body;
-//   console.log(req.body);
-//   // Query database for customer with matching username and password
-//   const customer = db.customers.find(c => c.username === username && c.password === password);
-
-//   if (customer) {
-
-//     // Generate JWT token with customer ID as payload 
-//     const token = jwt.sign({ customerId: customer.id }, 'secret_key');
-
-//     // Return success message and token to client
-//     res.json({ message: 'success', token }); 
-//   } else {
-//     res.status(401).json({ message: 'Invalid username or password' });
-//   }
-// });
-
 auth.post('/login', async (req,res) => {
   try {
-      // const errors = validationResult(req);
-      // if (!errors.isEmpty()) {
-      //     return res.status(422).send({ message: errors.array() });
-      // }
+     
       const { username, password } = req.body;
       const user = await pool.query(
         "SELECT * FROM login WHERE username = $1",
@@ -91,7 +67,7 @@ auth.post('/login', async (req,res) => {
         const ok = await bcrypt.compare(password, hashedPassword);
         if (ok) {
           const token = jwt.sign({ userId: user.id }, 'secret_key');
-          res.json({ message: 'success', token });
+          res.json({ message: 'success', token});
           
         } else {
             res.status(401).json({ message: 'Invalid username or password' });
@@ -100,6 +76,31 @@ auth.post('/login', async (req,res) => {
   } catch (err) {
           res.status(400)
           res.send({ message: err });
+  }
+});
+
+auth.post('/getuserinfo', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await pool.query(
+      "SELECT * FROM login WHERE username = $1",
+      [username]
+    );
+    if (user.rows[0].type === 'customer') {
+      const userinfo = await pool.query("SELECT * FROM login JOIN customer on login.id = customer.custid AND login.username = $1", [username]);
+      console.log(userinfo.rows[0]);
+      // req.session.user = userinfo.rows[0]
+      res.send(userinfo.rows[0]);
+
+    } else if (user.rows[0].type === 'employee') {
+      const userinfo = await pool.query("SELECT * FROM login JOIN employee ON login.id = employee.eid AND login.username = $1", [username]);
+      console.log(userinfo.rows[0]);
+      // req.session.user = userinfo.rows[0]
+      res.send(userinfo.rows[0]);
+    }
+  } catch (err) {
+    res.status(400);
+    res.send({ message: err });
   }
 });
 

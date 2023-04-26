@@ -4,10 +4,10 @@ import logo from './logo.png'
 import { useNavigate } from 'react-router-dom';
 console.log(logo);
 
-function Header() {
+function Header({loggeduser, setUser}) {
     const isLoggedIn = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate();
-
     const handleLogout = () => {
         localStorage.removeItem("token");
         navigate("/login");
@@ -27,9 +27,8 @@ function Header() {
                     </li>
                     
                     {isLoggedIn && (<li>
-                        <a href='/myflight'>My Flight</a>
+                        <a href='/myflights'>My Flight</a>
                     </li>)}
-
                     <li>
                         <a href='/contact'>Contact Us</a>
                     </li>

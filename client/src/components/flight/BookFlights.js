@@ -23,7 +23,7 @@ function Flights() {
   
     useEffect(() => {
         async function fetchOrigins() {
-            const response = await axios.get('http://localhost:5000/api/flights/origins');
+            const response = await axios.get('http://localhost:5200/api/flights/origins');
             setOrigins(response.data);
         }
         fetchOrigins();
@@ -31,7 +31,7 @@ function Flights() {
 
     useEffect(() => {
         async function fetchDestinations() {
-            const response = await axios.get('http://localhost:5000/api/flights/destinations');
+            const response = await axios.get('http://localhost:5200/api/flights/destinations');
             setDestinations(response.data);
         }
         fetchDestinations();
@@ -60,13 +60,13 @@ function Flights() {
     const handleSearch = async (event) => {
         event.preventDefault();
         try {
-          let url = `http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
+          let url = `http://localhost:5200/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
             const response = await axios.get(url);
             const departureFlights = response.data.rows;
             let returnFlights = []
             if (isRoundTrip) {
                 // Fetch return flights
-                const returnUrl = `http://localhost:5000/api/flights/flights?origin=${destination}&destination=${origin}&departureDate=${returnDate}`;
+                const returnUrl = `http://localhost:5200/api/flights/flights?origin=${destination}&destination=${origin}&departureDate=${returnDate}`;
                 const returnResponse = await axios.get(returnUrl);
                 returnFlights = returnResponse.data.rows;
             }
@@ -78,30 +78,6 @@ function Flights() {
         }
     };
 
-
-
-  //   const handleSearch = async (event) => {
-  //     event.preventDefault();
-  //     try {
-  //         let url = `http://localhost:5000/api/flights/flights?origin=${origin}&destination=${destination}&departureDate=${departDate}`;
-  //         if (isRoundTrip) {
-  //             url += `&returnDate=${returnDate}`;
-  //         }
-  //         const response = await axios.get(url);
-  //         const departureFlights = response.data.rows;
-  //         let returnFlights = [];
-  //         if (isRoundTrip) {
-  //             // Fetch return flights
-  //             const returnUrl = `http://localhost:5000/api/flights/flights?origin=${destination}&destination=${origin}&departureDate=${returnDate}`;
-  //             const returnResponse = await axios.get(returnUrl);
-  //             returnFlights = returnResponse.data.rows;
-  //         }
-  //         setFlights([...departureFlights, ...returnFlights]);
-  //         setBookingStep('departureFlights');
-  //     } catch (error) {
-  //         console.error(error);
-  //     }
-  // };
     return (
         <div className="searchPage">
             <h1>Book Your Trip</h1>
@@ -172,45 +148,7 @@ function Flights() {
                             Switch Origin/Destination
                           </button>
                         </div>
-          
-                        { /*{bookingStep === 'departureFlights' && (
-                          <div>
-                            <DepartureFlights
-                              flights={flights}
-                              origin={origin}
-                              destination={destination}
-                              departDate={departDate}
-                              onFlightSelect={(selectedFlight) => {
-                                setSelectedDeparture(selectedFlight);
-                                if (isRoundTrip) {
-                                  setBookingStep('returnFlights');
-                                } else {
-                                  // Navigate to the booking confirmation or payment page
-                                }
-                              }}
-                            />
-                            {isRoundTrip && (
-                              <button onClick={() => setBookingStep('returnFlights')}>
-                                Next
-                              </button>
-                            )}
-                          </div>
-                        )}
-      
-                        {bookingStep === 'returnFlights' && isRoundTrip && (
-                          <div>
-                            <ReturnFlights
-                              flights={flights}
-                              origin={destination}
-                              destination={origin}
-                              returnDate={returnDate}
-                              onFlightSelect={(selectedFlight) => {
-                                setSelectedReturn(selectedFlight);
-                                // Navigate to the booking confirmation or payment page
-                              }}
-                            />
-                          </div>
-                        )} */}
+        
                     </form>
                 </div>
                

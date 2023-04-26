@@ -9,9 +9,9 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded( {extended: true}));
 app.use(cors());
 app.use(express.json());
-app.use("/api/users/", auth);
+app.use("/api/users", auth);
 app.use("/api/flights", flights);
 
 //search flight base on origin and destination
 
-app.listen(5000, () => {console.log("Server started on port 5000")})
+app.listen(5200, () => {console.log("Server started on port 5200")})
