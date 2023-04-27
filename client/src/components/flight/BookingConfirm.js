@@ -76,6 +76,8 @@ function BookingConfirm({ loggeduser }) {
     <div className="confirm-main-container">
       <h2>Booking Confirmation</h2>
       <p>Customer ID: {user ? user.custid : "Not logged in"}</p>
+      <p>First Name: {user ? user.fname : "Not logged in"}</p>
+      <p>Last Name: {user ? user.lname : "Not logged in"}</p>
       <div className="departureFlight">
         <h3>
           Inbound Flight: {origin} to {destination} on {departDate}
