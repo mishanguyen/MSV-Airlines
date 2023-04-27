@@ -150,7 +150,6 @@ function Flights() {
                                 }}
                             />
                         </div>
-                        <Icon sx={{m: "10px"}}><SwapHorizIcon></SwapHorizIcon></Icon>
                         <div className='userInput'>
                             <label htmlFor="destination" className='label'>Destination:</label>
                             <Autocomplete
