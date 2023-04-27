@@ -12,14 +12,37 @@ import RetFlights from './components/flight/ReturnFlights';
 import MyFlights from './components/MyFlights/MyFlights'
 import EditFlights from './components/MyFlights/EditFlights';
 import EmpView from './components/employee/EmpView';
+import ContactUs from './components/ContactUs/ContactUs';
 import './App.css'
-
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 function App() {
   const user = localStorage.getItem("token")
   const [loggeduser, setUser] = useState(undefined);
 
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        'Montserrat',
+        'sans-serif',
+      ].join(','),
+      allVariants: {
+        textTransform: 'none',
+        fontSize: 15,
+      },
+    },
+    overrides: {
+      MuiCssBaseline: {
+        '@global': {
+          '@import': [
+            'url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap")',
+          ].join(';'),
+        },
+      },
+    },
+  });
   return (
+    <ThemeProvider theme={theme}>
     <Router>
       <Header loggeduser={loggeduser} setUser={setUser}/>
       <div className='main-content'>
@@ -38,10 +61,12 @@ function App() {
           <Route path="/myflights" exact element={<MyFlights loggeduser={loggeduser}/>} />
           <Route path="/editflights" exact element={<EditFlights/>}/>
           <Route path="/empview" exact element={<EmpView loggeduser={loggeduser} />} />
+          <Route path="/contactus" exact element={<ContactUs/>} />
         </Routes>
       </div>
       <Footer />
     </Router>
+    </ThemeProvider>
   )
 }
 
