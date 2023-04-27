@@ -20,30 +20,6 @@ function LogIn ({loggeduser, setUser}){
     setPassword(event.target.value);
   };
 
-  // const handleSubmit = async (e) => {
-  //   console.log("clicked submit");
-  //   e.preventDefault();
-  //   try {
-  //     const data = { username, password };
-  //     const url = "http://localhost:5200/api/users/login";
-  //     const { data: res } = await axios.post(url, data);
-  //     localStorage.setItem("token", res.data);
-  //     await axios
-  //       .post("http://localhost:5200/api/users/getuserinfo", data)
-  //       .then((res) => {
-  //         console.log(res.data);
-  //         localStorage.setItem("user", JSON.stringify(res.data))
-  //         setUser(JSON.stringify(res.data));
-  //         navigate('/'); // Navigate to the home page
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } catch (err) {
-  //     setErr(true);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     console.log("clicked submit");
     e.preventDefault();

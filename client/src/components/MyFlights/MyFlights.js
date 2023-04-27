@@ -2,13 +2,14 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-    import Table from "@mui/material/Table"
-    import TableBody from "@mui/material/TableBody"
-    import TableCell from "@mui/material/TableCell"
-    import TableHead from "@mui/material/TableHead"
-    import TableRow from "@mui/material/TableRow"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell from "@mui/material/TableCell"
+import TableHead from "@mui/material/TableHead"
+import TableRow from "@mui/material/TableRow"
 import { Button, Checkbox } from "@mui/material"
 import './MyFlights.css'
+import { formatDateTime, getDuration } from "../../helperFunction/helpers"
 
 function MyFlights( {loggeduser} ) {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -92,6 +93,7 @@ return(
                             <TableCell>Destination</TableCell>
                             <TableCell>Departure Time</TableCell>
                             <TableCell>Arrival Time</TableCell>
+                            <TableCell>Duration</TableCell>
                             <TableCell>Price</TableCell>
                             <TableCell><Checkbox onChange={selectAll}></Checkbox></TableCell>
                         </TableRow>
@@ -103,8 +105,9 @@ return(
                                 <TableCell>{flight.flightid}</TableCell>
                                 <TableCell>{flight.origin}</TableCell>
                                 <TableCell>{flight.destination}</TableCell>
-                                <TableCell>{flight.departuretime.substring(0,16).replace("T", " ")}</TableCell>
-                                <TableCell>{flight.arrivaltime.substring(0,16).replace("T", " ")}</TableCell>
+                                <TableCell>{formatDateTime(flight.departuretime)}</TableCell>
+                                <TableCell>{formatDateTime(flight.arrivaltime)}</TableCell>
+                                <TableCell>{getDuration(flight.departuretime, flight.arrivaltime)}</TableCell>
                                 <TableCell>${flight.price}</TableCell>
                                 <TableCell><Checkbox checked={selected.includes(flight)} onChange={() => handleChange(flight)}></Checkbox></TableCell>
                             </TableRow>

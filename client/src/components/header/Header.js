@@ -6,13 +6,13 @@ console.log(logo);
 
 function Header({loggeduser, setUser}) {
     const isLoggedIn = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.removeItem("token");
         navigate("/login");
     };
-
+    const user = JSON.parse(localStorage.getItem('user'))
+    const userType = user.type;
     return (
         <header>
             <nav className='nav'>
@@ -26,9 +26,14 @@ function Header({loggeduser, setUser}) {
                         <a href='/about'>About Us</a>
                     </li>
                     
-                    {isLoggedIn && (<li>
+                    {isLoggedIn && userType === 'customer' && (<li>
                         <a href='/myflights'>My Flight</a>
                     </li>)}
+
+                    {isLoggedIn && userType === 'employee' && (<li>
+                        <a href='/empview'>Bookings</a>
+                    </li>)}
+
                     <li>
                         <a href='/contact'>Contact Us</a>
                     </li>

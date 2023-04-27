@@ -1,7 +1,7 @@
 div.btn-container{
-    display: table-cell;
     vertical-align: middle;
     text-align: center;
+    justify-content: center;
 }
 
 label {

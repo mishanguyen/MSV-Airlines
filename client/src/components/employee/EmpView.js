@@ -33,42 +33,53 @@ function EmpView() {
 
     return (
         <div className="empview-main-div">
-        <h1>Employee View</h1>
-        <div className="content">
-            {filteredData.length > 0 ? <> 
-                <Table size="small">
-                    <TableHead style={{justifyContent:"center"}}>
-                        <TableRow>
-                            <TableCell>Customer ID</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Address</TableCell>
-                            <TableCell>Booking ID</TableCell>
-                            <TableCell>Origin</TableCell>
-                            <TableCell>Destination</TableCell>
-                            <TableCell>Departure Time</TableCell>
-                            <TableCell>Arrival Time</TableCell>
-                            <TableCell>Price</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {data.map((user) => (
-                            <TableRow key={user.bookingid}>
-                                <TableCell>{user.custid}</TableCell>
-                                <TableCell>{user.fname} {user.lname}</TableCell>
-                                <TableCell>{user.address}</TableCell>
-                                <TableCell>{user.bookingid}</TableCell>
-                                <TableCell>{user.origin}</TableCell>
-                                <TableCell>{user.destination}</TableCell>
-                                <TableCell>{user.departuretime.replace("T", " ").substring(0, 16)}</TableCell>
-                                <TableCell>{user.arrivaltime.replace("T", " ").substring(0, 16)}</TableCell>
-                                <TableCell>${user.price}</TableCell>
+            <h1>Search Bookings</h1>
+            <div className="filter-box">
+                <label htmlFor="cust-id">Customer ID:</label>
+                <input
+                type="text"
+                id="cust-id"
+                name="cust-id"
+                value={custId}
+                onChange={(e) => setCustId(e.target.value)}
+                />
+                <button onClick={filterData}>Filter</button>
+            </div>
+            <div className="content">
+                {filteredData.length > 0 ? <> 
+                    <Table size="small">
+                        <TableHead style={{justifyContent:"center"}}>
+                            <TableRow>
+                                <TableCell>Customer ID</TableCell>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Address</TableCell>
+                                <TableCell>Booking ID</TableCell>
+                                <TableCell>Origin</TableCell>
+                                <TableCell>Destination</TableCell>
+                                <TableCell>Departure Time</TableCell>
+                                <TableCell>Arrival Time</TableCell>
+                                <TableCell>Price</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </> :
-            <h2>No data to display!</h2>}
-        </div>
+                        </TableHead>
+                        <TableBody>
+                            {data.map((user) => (
+                                <TableRow key={user.bookingid}>
+                                    <TableCell>{user.custid}</TableCell>
+                                    <TableCell>{user.fname} {user.lname}</TableCell>
+                                    <TableCell>{user.address}</TableCell>
+                                    <TableCell>{user.bookingid}</TableCell>
+                                    <TableCell>{user.origin}</TableCell>
+                                    <TableCell>{user.destination}</TableCell>
+                                    <TableCell>{user.departuretime.replace("T", " ").substring(0, 16)}</TableCell>
+                                    <TableCell>{user.arrivaltime.replace("T", " ").substring(0, 16)}</TableCell>
+                                    <TableCell>${user.price}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </> :
+                <h2>No records found.</h2>}
+            </div>
         </div>
   );
 }

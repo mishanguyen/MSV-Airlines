@@ -7,7 +7,6 @@
     display: flex;
     justify-content: space-between;
     margin: 1rem 1rem 0 1rem;
-    margin-bottom: 2rem;
     position: relative;
     bottom: 0;
     right: 0;
@@ -20,4 +19,3 @@
     list-style: none;
     float: left;
 }
-
