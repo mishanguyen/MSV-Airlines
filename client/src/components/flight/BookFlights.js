@@ -11,6 +11,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Alert from '@mui/material/Alert';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import Button from '@mui/material/Button';
+import { Icon } from '@mui/material';
 
 function Flights() {
     const [noFlights, setNoFlights] = React.useState(false);
