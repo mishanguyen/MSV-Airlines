@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './BookFlights.css';
 import ToggleSwitch from './ToggleSwitch';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { Icon } from '@mui/material';
+
 
 function Flights() {
     const [origin, setOrigin] = useState('');
@@ -86,7 +89,7 @@ function Flights() {
                 <div className='formContainer'>
                     <form className="searchForm" onSubmit={handleSearch}>
                         <div className='userInput' >
-                            <label htmlFor="origin">Origin:</label>
+                            {/* <label htmlFor="origin">Origin:</label> */}
                             <select id="origin" value={origin} onChange={handleOriginChange} required>
                                 <option value="">Select origin</option>
                                     {origins.map((city) => (
@@ -96,8 +99,9 @@ function Flights() {
                                     ))}
                             </select>
                         </div>
+                        <Icon sx={{m: "10px"}}><SwapHorizIcon></SwapHorizIcon></Icon>
                         <div className='userInput'>
-                            <label htmlFor="destination">Destination:</label>
+                            {/* <label htmlFor="destination">Destination:</label> */}
                             <select
                                 id="destination"
                                 value={destination}
@@ -137,16 +141,15 @@ function Flights() {
                             </div>
                         )}
                         <div className='buttonContainer'>
-                          <button type='submit'>
-                              Search
-                          </button>
-                          <button onClick={() => {
+                        <input type="submit" value="Search" className='submitBtn'></input>
+                        <input
+                            onClick={() => {
                               const temp = origin;
                               setOrigin(destination);
                               setDestination(temp);
-                          }}>
-                            Switch Origin/Destination
-                          </button>
+                          }} 
+                          className='submitBtn' type="button"
+                          value="Switch Origin/Destination"></input>
                         </div>
         
                     </form>

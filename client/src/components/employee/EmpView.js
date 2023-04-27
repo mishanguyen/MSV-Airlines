@@ -36,7 +36,7 @@ function EmpView() {
         <h1>Employee View</h1>
         <div className="content">
             {filteredData.length > 0 ? <> 
-                <Table size="small">
+                <Table className="table" size="small">
                     <TableHead style={{justifyContent:"center"}}>
                         <TableRow>
                             <TableCell>Customer ID</TableCell>

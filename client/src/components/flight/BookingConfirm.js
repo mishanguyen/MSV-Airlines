@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Alert } from "@mui/material";
+import { formatDateTime, getDuration } from "../../helperFunction/helpers"
 
 function BookingConfirm({ loggeduser }) {
   const user = JSON.parse(localStorage.getItem('user'))
@@ -84,15 +85,12 @@ function BookingConfirm({ loggeduser }) {
           Route: {selectedDeparture.origin} - {selectedDeparture.destination}
         </p>
         <p>
-          Departure Time: {selectedDeparture.departuretime
-            .replace("T", " ")
-            .substring(0, 16)}
+          Departure Time: {formatDateTime(selectedDeparture.departuretime)}
         </p>
         <p>
-          Arrival Time: {selectedDeparture.arrivaltime
-            .replace("T", " ")
-            .substring(0, 16)}
+          Arrival Time: {formatDateTime(selectedDeparture.arrivaltime)}
         </p>
+        <p>Duration: {getDuration(selectedDeparture.departuretime, selectedDeparture.arrivaltime)}</p>
         <p>
           Price: ${selectedDeparture.price}
         </p>
@@ -107,11 +105,12 @@ function BookingConfirm({ loggeduser }) {
             Route: {selectedReturn.origin} - {selectedReturn.destination}
           </p>
           <p>
-            Departure Time: {selectedReturn.departuretime.substring(0, 16).replace("T", " ")}
+            Departure Time: {formatDateTime(selectedReturn.departuretime)}
           </p>
           <p>
-            Arrival Time: {selectedReturn.arrivaltime.substring(0, 16).replace("T", " ")}
+            Arrival Time: {formatDateTime(selectedReturn.arrivaltime)}
           </p>
+          <p>Duration: {getDuration(selectedReturn.departuretime, selectedReturn.arrivaltime)}</p>
           <p>
             Price: ${selectedReturn.price}
           </p>
@@ -120,14 +119,13 @@ function BookingConfirm({ loggeduser }) {
       <div className="confirmButton">
         <button onClick={handleConfirm}>Confirm Booking</button>
       </div>
-      <div className="continueButton">
+      {newDate && <div className="continueButton">
         <button onClick={handleContinue}>Continue Editing</button>
-      </div>
+      </div>}
+      
       {message && <Alert severity={`${severity}`}>{message}</Alert>}
     </div>
   );
 }
 
 export default BookingConfirm;
-
-export default BookingConfirm; 
