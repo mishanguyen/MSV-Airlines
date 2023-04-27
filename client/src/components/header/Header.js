@@ -6,7 +6,6 @@ console.log(logo);
 
 function Header({loggeduser, setUser}) {
     const isLoggedIn = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -19,7 +18,7 @@ function Header({loggeduser, setUser}) {
                 <img src={logo} alt='logo' className='logo'/>
                 <ul>
                     <li>
-                        <a href='/'>Home</a>
+                        <a href='/'> MISHA IS GAYHome</a>
                     </li>
 
                     <li>
