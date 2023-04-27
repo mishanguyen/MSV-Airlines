@@ -197,6 +197,9 @@ flights.post('/confirmbooking', async (req,res) => {
             returnData.origin, returnData.destination, returnData.departuretime, returnData.arrivaltime])
             console.log("return:", returnFlight.rows[0].bookingid)
         }
+        const refreshView = "REFRESH MATERIALIZED VIEW employee_view"
+        await pool.query(refreshView)
+
         res.json(departureFlight.rows[0].bookingid)
     }
     catch (err){

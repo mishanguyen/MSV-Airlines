@@ -1,0 +1,8 @@
+.filter-box button{
+    background-color: #ffbd03;
+    width: 150px;
+  }
+  .filter-box Button:hover {
+    background-color: #ffbd03;
+    opacity: 0.8;
+}
