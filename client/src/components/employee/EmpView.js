@@ -33,7 +33,7 @@ function EmpView() {
 
     return (
         <div className="empview-main-div">
-            <h1>Employee View</h1>
+            <h1>Search Bookings</h1>
             <div className="filter-box">
                 <label htmlFor="cust-id">Customer ID:</label>
                 <input

@@ -2,13 +2,13 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-    import Table from "@mui/material/Table"
-    import TableBody from "@mui/material/TableBody"
-    import TableCell from "@mui/material/TableCell"
-    import TableHead from "@mui/material/TableHead"
-    import TableRow from "@mui/material/TableRow"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell from "@mui/material/TableCell"
+import TableHead from "@mui/material/TableHead"
+import TableRow from "@mui/material/TableRow"
 import { Button, Checkbox } from "@mui/material"
-import './MyFlights.css'
+// import './MyFlights.css'
 
 function MyFlights( {loggeduser} ) {
     const user = JSON.parse(localStorage.getItem('user'))

@@ -11,23 +11,27 @@ function Header({loggeduser, setUser}) {
         localStorage.removeItem("token");
         navigate("/login");
     };
-
+    const user = JSON.parse(localStorage.getItem('user'))
+    const userType = user.userType;
     return (
         <header>
             <nav className='nav'>
                 <img src={logo} alt='logo' className='logo'/>
                 <ul>
                     <li>
-                        <a href='/'> MISHA IS GAYHome</a>
+                        <a href='/'>Home</a>
                     </li>
 
                     <li>
                         <a href='/about'>About Us</a>
                     </li>
                     
-                    {isLoggedIn && (<li>
+                    {isLoggedIn && (userType === 'customer' ? (<li>
                         <a href='/myflights'>My Flight</a>
-                    </li>)}
+                    </li>) : (<li>
+                        <a href='/empview'>Bookings</a>
+                    </li>))}
+
                     <li>
                         <a href='/contact'>Contact Us</a>
                     </li>
