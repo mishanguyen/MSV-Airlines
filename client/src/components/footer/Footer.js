@@ -15,20 +15,18 @@ function Footer() {
                     <p>4202 E Fowler Ave, Tampa, FL 33620</p>
                 </div>
                 <div className='row'>
-                    <p>Phone: (111) 222 3333</p>
-                    <p>Email: maintechBS@gmail.com</p>
+                    <p>Phone: (813) 974 1111</p>
+                    <p>Email: support@msvairlines.com</p>
                 </div>
             </div>
 
             {/*Business Hour */}
             <div className='business-section'>
                 <div className='row'>
-                    <h3>Business Hour</h3>
+                    <h3>Business Hours</h3>
                 </div>
                 <div className='row'>
-                    <p>Monday - Friday: 9am - 5pm</p>
-                    <p>Saturday: 8am - 2pm</p>
-                    <p>Sunday: Closed</p>
+                    <p>Sunday - Saturday: 24/7</p>
                 </div>
             </div>
 

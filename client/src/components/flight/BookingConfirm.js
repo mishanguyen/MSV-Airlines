@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Alert } from "@mui/material";
@@ -27,7 +27,7 @@ function BookingConfirm({ loggeduser }) {
 
   const handleContinue = () => {
     if (newDate && flag){
-      const flights = editedflights.filter((flight) => flight.bookingid != bookingID)
+      const flights = editedflights.filter((flight) => flight.bookingid !== bookingID)
       console.log(editedflights)
       console.log(flights)
       console.log("hihihihi")
@@ -53,7 +53,7 @@ function BookingConfirm({ loggeduser }) {
       var url = "http://localhost:5200/api/flights/updateflight"
       data = {...data, bookingID: bookingID}
     } else{
-      var url = "http://localhost:5200/api/flights/confirmbooking"
+      url = "http://localhost:5200/api/flights/confirmbooking"
     }
     await axios.post(url, data)
     .then((res) => {
