@@ -1,14 +1,17 @@
-
-  .searchPage {
+.searchPage {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 50px 20px;
-  }
+}
+
+.searchPage h1 {
+    margin-bottom: 2rem;
+}
   
   /* Style the search form container */
-  .searchPageContainer {
-    width: 60%;
+.searchPageContainer {
+    width: 90%;
     background-color: #fff;
     border-radius: 10px;
     padding: 3rem;
@@ -29,7 +32,7 @@
 .userInput {
     display: flex;
     flex-direction: column;
-    width: 45%;
+    width: 23%;
 }
 
 .swapContainer {
@@ -41,7 +44,7 @@
 
 .buttonContainer {
     margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .buttonContainer Button {
@@ -52,4 +55,9 @@
 .buttonContainer Button:hover {
     background-color: #ffbd03;
     opacity: 0.6;
+}
+
+.errorContainer {
+    margin-top: 2rem;
+    width: 40%
 }

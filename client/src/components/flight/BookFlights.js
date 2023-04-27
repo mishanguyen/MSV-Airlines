@@ -11,7 +11,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Alert from '@mui/material/Alert';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import Button from '@mui/material/Button';
-import { Icon } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Flights() {
     const [noFlights, setNoFlights] = React.useState(false);
@@ -120,6 +120,15 @@ function Flights() {
         }
     };
 
+    const theme = createTheme({
+        typography: {
+          fontFamily: [
+            'Montserrat',
+            'sans-serif'
+          ].join(',')
+        },
+    });
+
     return (
         <div className="searchPage">
             <h1>Book Your Trip</h1>
@@ -129,16 +138,20 @@ function Flights() {
                     <div className='routeContainer'>
                         <div className='userInput' >
                             <label htmlFor="origin" className='label'>Origin:</label>
-                            <Autocomplete
-                                id="origin"
-                                options={origins}
-                                getOptionLabel={(option) => `${option.code} - ${option.name}`}
-                                value={origin}
-                                onChange={handleOriginChange}
-                                renderInput={(params) => (
-                                    <TextField {...params} label="Select origin" variant="outlined" required />
-                                )}
-                            />
+                            <ThemeProvider theme={theme}>
+                                <Autocomplete
+                                    style={{fontFamily: 'Montserrat'}}
+                                    id="origin"
+                                    options={origins}
+                                    getOptionLabel={(option) => `${option.code} - ${option.name}`}
+                                    value={origin}
+                                    onChange={handleOriginChange}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Select origin" variant="outlined" required />
+                                    )}
+                                />
+                            </ThemeProvider>
+                            
                             
                         </div>
                         <div className='swapContainer'>
@@ -150,68 +163,103 @@ function Flights() {
                                 }}
                             />
                         </div>
-                        <Icon sx={{m: "10px"}}><SwapHorizIcon></SwapHorizIcon></Icon>
                         <div className='userInput'>
                             <label htmlFor="destination" className='label'>Destination:</label>
-                            <Autocomplete
-                                id="destination"
-                                options={destinations}
-                                getOptionLabel={(option) => `${option.code} - ${option.name}`}
-                                value={destination}
-                                onChange={handleDestinationChange}
-                                renderInput={(params) => (
-                                    <TextField {...params} label="Select destination" variant="outlined" required />
-                                )}
-                            />
+                            <ThemeProvider theme={theme}>
+                                <Autocomplete
+                                    id="destination"
+                                    style={{fontFamily: 'Montserrat'}}
+                                    options={destinations}
+                                    getOptionLabel={(option) => `${option.code} - ${option.name}`}
+                                    value={destination}
+                                    onChange={handleDestinationChange}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Select destination" variant="outlined" required />
+                                    )}
+                                />
+                            </ThemeProvider>
                         </div>
-                    </div>
 
-                    <div className='dateContainer'>
                         <div className='userInput'>
                             <label htmlFor="depart-date" className='label'>Depart date:</label>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
-                                    disablePast
-                                    id="depart-date"
-                                    min={minDate}
-                                    label="Departure Date"
-                                    value={departDate}
-                                    onChange={handleDepartDateChange}
-                                    required
-                                />
+                                <ThemeProvider theme={theme}>
+                                    <DatePicker 
+                                        style={{fontFamily: 'Montserrat'}}
+                                        disablePast
+                                        disable
+                                        id="depart-date"
+                                        label="Departure Date"
+                                        value={departDate}
+                                        onChange={handleDepartDateChange}
+                                        required
+                                    />
+                                </ThemeProvider>
                             </LocalizationProvider>
                         </div>
                         {isRoundTrip && (
                             <div className='userInput'>
                                 <label htmlFor="return-date" className='label'>Return date:</label>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DatePicker 
-                                        disablePast
-                                        id="return-date"
-                                        min={minDate}
-                                        label="Return Date"
-                                        value={returnDate}
-                                        onChange={handleReturnDateChange}
-                                        required
-                                    />
+                                    <ThemeProvider theme={theme}>
+                                        <DatePicker 
+                                            style={{fontFamily: 'Montserrat'}}
+                                            disablePast
+                                            id="return-date"
+                                            label="Return Date"
+                                            value={returnDate}
+                                            onChange={handleReturnDateChange}
+                                            required
+                                        />
+                                    </ThemeProvider>
+                                </LocalizationProvider>
+                            </div>
+                        )}
+                        {!isRoundTrip && (
+                            <div className='userInput'>
+                                <label htmlFor="return-date" className='label'>Return date:</label>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <ThemeProvider theme={theme}>
+                                        <DatePicker 
+                                            style={{fontFamily: "Montserrat"}}
+                                            disablePast
+                                            disabled
+                                            id="return-date"
+                                            min={minDate}
+                                            label="Return Date"
+                                            value={returnDate}
+                                            onChange={handleReturnDateChange}
+                                            required
+                                        />
+                                    </ThemeProvider>
                                 </LocalizationProvider>
                             </div>
                         )}
                     </div>
                     
+                    {err && (<div className='errorContainer'>
+                        <ThemeProvider theme={theme}>
+                            <Alert variant="outlined" severity="error">
+                                Please enter all required fields!
+                            </Alert>
+                        </ThemeProvider>
+                    </div>)}
+
+                    {noFlights && (<div className='errorContainer'>
+                        <ThemeProvider theme={theme}>
+                            <Alert variant="outlined" severity="error">
+                                Sorry, there are no flights for the chosen route or date!
+                            </Alert>
+                        </ThemeProvider>
+                    </div>)}
+                    
                     <div className='buttonContainer'>
-                        <Button variant="contained" onClick={handleSearch}>Search</Button>
+                        <ThemeProvider theme={theme}>
+                            <Button variant="contained" onClick={handleSearch}>Search</Button>
+                        </ThemeProvider>
                     </div>
 
-                    {err && <Alert variant="outlined" severity="error">
-                        Please enter the required fields!
-                    </Alert>}
-
-                    {noFlights && <Alert variant="outlined" severity="error">
-                        Sorry, there are no flights for the chosen route or date!
-                    </Alert>}
                 </div>
-               
             </div>
         </div>
     );
