@@ -14,17 +14,42 @@
     padding: 3rem;
 }
 
-.formContainer {
-    width: 100%;
+.routeContainer, .dateContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    justify-content: space-between; 
 }
 
-.searchForm {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.label  {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .userInput {
     display: flex;
     flex-direction: column;
+    width: 45%;
+}
+
+.swapContainer {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.buttonContainer {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.buttonContainer Button {
+    background-color: #ffbd03;
+    width: 150px;
+}
+
+.buttonContainer Button:hover {
+    background-color: #ffbd03;
+    opacity: 0.6;
 }

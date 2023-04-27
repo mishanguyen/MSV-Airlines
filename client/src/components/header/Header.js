@@ -12,7 +12,7 @@ function Header({loggeduser, setUser}) {
         navigate("/login");
     };
     const user = JSON.parse(localStorage.getItem('user'))
-    const userType = user.userType;
+    const userType = user.type;
     return (
         <header>
             <nav className='nav'>
@@ -26,11 +26,13 @@ function Header({loggeduser, setUser}) {
                         <a href='/about'>About Us</a>
                     </li>
                     
-                    {isLoggedIn && (userType === 'customer' ? (<li>
+                    {isLoggedIn && userType === 'customer' && (<li>
                         <a href='/myflights'>My Flight</a>
-                    </li>) : (<li>
+                    </li>)}
+
+                    {isLoggedIn && userType === 'employee' && (<li>
                         <a href='/empview'>Bookings</a>
-                    </li>))}
+                    </li>)}
 
                     <li>
                         <a href='/contact'>Contact Us</a>

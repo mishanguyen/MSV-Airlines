@@ -78,7 +78,7 @@ function EmpView() {
                         </TableBody>
                     </Table>
                 </> :
-                <h2>No data to display!</h2>}
+                <h2>No records found.</h2>}
             </div>
         </div>
   );

@@ -28,15 +28,15 @@
     opacity: 0.9;
 }
 
-.userInput {
+/* .userInput {
     display: flex;
     flex-direction: row;
-}
+} */
 
-.userInput input {
+/* .userInput input {
     margin-left: 10px;
 }
 
 .userInput label {
     font-size: 15px;
-}
+} */
