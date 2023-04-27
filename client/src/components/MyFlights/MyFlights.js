@@ -80,7 +80,7 @@ function MyFlights( {loggeduser} ) {
 
 return(
     <div className="flights-main-container">
-        <h2>Flights for {user.fname}</h2>
+        <h2>Flights for {user.fname} {user.lname}</h2>
         <div className="content">
             {flights.length > 0 ? (
                 <>

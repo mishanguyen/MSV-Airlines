@@ -1,13 +1,24 @@
-.about-section {
-    display: flex;
-    margin: 1rem 10rem 0 12rem;
-    align-items: center;
-    justify-content: space-between;
-    background-color: white;
-}
 
-.about-section h1 {
-    margin-bottom: 13rem;
-}
+ .container {
+    margin: 0 auto;
+    max-width: 800px;
+  }
+  
+  .header {
 
-
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .main {
+    /* background-color: #F0F0F0; */
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 20px;
+  }
+  
+  .paragraph {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }

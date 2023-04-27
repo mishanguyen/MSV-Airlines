@@ -35,7 +35,7 @@ function Header({loggeduser, setUser}) {
                     </li>)}
 
                     <li>
-                        <a href='/contact'>Contact Us</a>
+                        <a href='/contactus'>Contact Us</a>
                     </li>
                     {!isLoggedIn && (<li>
                         <a href='/signup'>Sign Up</a>
