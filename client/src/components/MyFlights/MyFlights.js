@@ -7,7 +7,7 @@ import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
-import { Button, Checkbox } from "@mui/material"
+import { Button, Checkbox, Typography } from "@mui/material"
 import './MyFlights.css'
 import { formatDateTime, getDuration } from "../../helperFunction/helpers"
 
@@ -124,7 +124,7 @@ return(
                     borderRadius: 35,
                     backgroundColor: "#21b6ae",
                     padding: "10px 20px",
-                    fontSize: "15px",
+                    fontSize: "17px",
                     paddingTop: "10px",
                     marginRight: "50px",
                 }}
@@ -138,7 +138,7 @@ return(
                     borderRadius: 35,
                     backgroundColor: "#92a8d1",
                     padding: "10px 20px",
-                    fontSize: "15px",
+                    fontSize: "17px",
                     paddingTop: "10px",
                     marginRight: "50px"
                 }}
