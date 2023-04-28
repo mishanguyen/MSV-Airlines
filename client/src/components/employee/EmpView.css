@@ -1,9 +1,21 @@
-.buttonContainer button{
-    background-color: #ffbd03;
-    width: 150px;
-  }
-  .buttonContainer Button:hover {
-    background-color: #ffbd03;
-    opacity: 0.8;
+.empview-main-div{
+  text-align: center;
 }
 
+.buttonContainer{
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  width: 40%;
+}
+.buttonContainer Button{
+    background-color: #ffbd03;
+    width: 150px;
+    margin-bottom: 15px;
+  }
+
+.buttonContainer Button:hover {
+  background-color: #ffbd03;
+  opacity: 0.8;
+}
