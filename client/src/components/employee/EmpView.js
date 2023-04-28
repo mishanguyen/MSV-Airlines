@@ -36,18 +36,11 @@ function EmpView() {
         navigate("/viewuser", {state: {user: user}})
     }
     const handleSearchChange = (event, newValue) => {
+        console.log(event)
         const value = newValue ? newValue : null;
+        console.log(value)
         setSearchValue(value);
     };
-    // const filterData = async () => {
-    //     try {
-    //     const result = await axios.get(`http://localhost:5200/api/users/empview/${custId}`);
-    //     setFilteredData(result.data);
-    //     console.log(result.data)
-    //     } catch (error) {
-    //     console.log(error);
-    //     }
-    // };
 
     const filterData = () => {
         console.log(searchValue)
@@ -87,7 +80,7 @@ function EmpView() {
                         </TableHead>
                         <TableBody>
                             {data.map((user) => (
-                                <TableRow key={user.bookingid}>
+                                <TableRow key={user.custid}>
                                     <TableCell>{user.custid}</TableCell>
                                     <TableCell>{user.fname}</TableCell>
                                     <TableCell>{user.lname}</TableCell>
