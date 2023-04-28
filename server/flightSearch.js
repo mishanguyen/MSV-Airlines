@@ -253,4 +253,21 @@ flights.post('/updateflight', async (req, res) => {
         res.json(err)
     }
 })
+
+flights.get('/employeeview/:custid', async (req, res) => {
+    try {
+        const custid = req.params.custid
+        let empView;
+        if (custid) {
+        //   empView = await pool.query('SELECT * FROM emp_view WHERE custid = $1', [custId]);
+          empView = await pool.query('SELECT * FROM ticket WHERE purchaser = $1', [custid]);
+        } else {
+          empView = await pool.query('SELECT * FROM emp_view');
+        }
+        res.send(empView.rows);
+    } catch (err){
+        console.log(err)
+        res.send(err)
+    }
+})
 module.exports = flights;

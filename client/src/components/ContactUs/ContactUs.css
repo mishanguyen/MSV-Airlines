@@ -39,7 +39,7 @@
     /* text-align: center; */
   }
   
-  textarea {
+  .form-group textarea {
     resize: vertical;
   }
   

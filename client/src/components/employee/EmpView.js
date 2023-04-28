@@ -6,11 +6,18 @@ import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
+import { IconButton, Button, Radio, TextField } from "@mui/material";
+import PageviewIcon from '@mui/icons-material/Pageview';
+import { useNavigate } from "react-router-dom";
+import {Autocomplete} from "@mui/material";
 
 function EmpView() {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [custId, setCustId] = useState('');
+    const [searchValue, setSearchValue] = useState(undefined)
+    const [options, setOptions] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,61 +25,74 @@ function EmpView() {
         setData(result.data);
         setFilteredData(result.data);
         console.log(result.data)
+        const uniqueOptions = [...new Set(result.data.map(item => item.custid))];
+        setOptions(uniqueOptions)
         };
         fetchData();
     }, []);
 
-    const filterData = async () => {
-        try {
-        const result = await axios.get(`http://localhost:5200/api/users/empview/${custId}`);
-        setFilteredData(result.data);
-        } catch (error) {
-        console.log(error);
-        }
+    const handleClick = (user) => {
+        console.log(user)
+        navigate("/viewuser", {state: {user: user}})
+    }
+    const handleSearchChange = (event, newValue) => {
+        const value = newValue ? newValue : null;
+        setSearchValue(value);
     };
+    // const filterData = async () => {
+    //     try {
+    //     const result = await axios.get(`http://localhost:5200/api/users/empview/${custId}`);
+    //     setFilteredData(result.data);
+    //     console.log(result.data)
+    //     } catch (error) {
+    //     console.log(error);
+    //     }
+    // };
 
+    const filterData = () => {
+        console.log(searchValue)
+        const newData = data.filter((user) => user == searchValue)
+        setData(newData)
+    }
     return (
         <div className="empview-main-div">
             <h1>Search Bookings</h1>
-            <div className="filter-box">
-                <label htmlFor="cust-id">Customer ID:</label>
-                <input
-                type="text"
-                id="cust-id"
-                name="cust-id"
-                value={custId}
-                onChange={(e) => setCustId(e.target.value)}
+            <Autocomplete
+                    required
+                    clearOnBlur={false}
+                    id="filter"
+                    options={data}
+                    getOptionLabel={(option) => `${option.custid} - ${option.fname} ${option.lname}`}
+                    value={searchValue}
+                    onChange={handleSearchChange}
+                    renderInput={(params) => (
+                        <TextField required {...params} label="Search" value={searchValue} 
+                        variant="outlined" />
+                    )}
                 />
-                <button onClick={filterData}>Filter</button>
-            </div>
+                <div className="buttonContainer">
+                <Button onClick={filterData}>Search</Button>
+                </div>
             <div className="content">
                 {filteredData.length > 0 ? <> 
                     <Table size="small">
                         <TableHead style={{justifyContent:"center"}}>
                             <TableRow>
                                 <TableCell>Customer ID</TableCell>
-                                <TableCell>Name</TableCell>
+                                <TableCell>First Name</TableCell>
+                                <TableCell>Last Name</TableCell>
                                 <TableCell>Address</TableCell>
-                                <TableCell>Booking ID</TableCell>
-                                <TableCell>Origin</TableCell>
-                                <TableCell>Destination</TableCell>
-                                <TableCell>Departure Time</TableCell>
-                                <TableCell>Arrival Time</TableCell>
-                                <TableCell>Price</TableCell>
+                                <TableCell sx={{textAlign:"center"}}>View User</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {data.map((user) => (
                                 <TableRow key={user.bookingid}>
                                     <TableCell>{user.custid}</TableCell>
-                                    <TableCell>{user.fname} {user.lname}</TableCell>
+                                    <TableCell>{user.fname}</TableCell>
+                                    <TableCell>{user.lname}</TableCell>
                                     <TableCell>{user.address}</TableCell>
-                                    <TableCell>{user.bookingid}</TableCell>
-                                    <TableCell>{user.origin}</TableCell>
-                                    <TableCell>{user.destination}</TableCell>
-                                    <TableCell>{user.departuretime.replace("T", " ").substring(0, 16)}</TableCell>
-                                    <TableCell>{user.arrivaltime.replace("T", " ").substring(0, 16)}</TableCell>
-                                    <TableCell>${user.price}</TableCell>
+                                    <TableCell sx={{textAlign:"center"}}><Radio onClick={() => handleClick(user)}></Radio></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
