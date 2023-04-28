@@ -10,8 +10,9 @@
 }
   
   /* Style the search form container */
-.searchPageContainer {
-    width: 90%;
+  .searchPageContainer {
+    margin-top: 1rem;
+    width: 60%;
     background-color: #fff;
     border-radius: 10px;
     padding: 3rem;
@@ -45,11 +46,13 @@
 .buttonContainer {
     margin-top: 1.5rem;
     text-align: center;
+
 }
 
 .buttonContainer Button {
     background-color: #ffbd03;
     width: 150px;
+    margin-top: 1.5rem;
 }
 
 .buttonContainer Button:hover {

@@ -6,7 +6,7 @@ import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
-import { IconButton, Button, Radio, TextField } from "@mui/material";
+import { IconButton, Button, Radio, TextField, Alert } from "@mui/material";
 import PageviewIcon from '@mui/icons-material/Pageview';
 import { useNavigate } from "react-router-dom";
 import {Autocomplete} from "@mui/material";
@@ -18,6 +18,7 @@ function EmpView() {
     const [searchValue, setSearchValue] = useState(undefined)
     const [options, setOptions] = useState([])
     const navigate = useNavigate()
+    const [err, setErr] = useState(undefined)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,13 +45,18 @@ function EmpView() {
 
     const filterData = () => {
         console.log(searchValue)
-        const newData = data.filter((user) => user == searchValue)
-        setData(newData)
+        if (searchValue){
+            const newData = data.filter((user) => user == searchValue)
+            setFilteredData(newData)
+        } else{
+            setErr("Please enter a value.")
+        }
     }
     return (
         <div className="empview-main-div">
             <h1>Search Bookings</h1>
             <Autocomplete
+                    sx={{padding:"15px"}}
                     required
                     clearOnBlur={false}
                     id="filter"
@@ -65,6 +71,7 @@ function EmpView() {
                 />
                 <div className="buttonContainer">
                 <Button variant="contained" onClick={filterData}>Search</Button>
+                {err && <Alert sx={{textAlign:"center"}}severity="error">{err}</Alert>}
                 </div>
             <div className="content">
                 {filteredData.length > 0 ? <> 
@@ -79,7 +86,7 @@ function EmpView() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {data.map((user) => (
+                            {filteredData.map((user) => (
                                 <TableRow key={user.custid}>
                                     <TableCell>{user.custid}</TableCell>
                                     <TableCell>{user.fname}</TableCell>

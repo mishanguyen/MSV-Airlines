@@ -185,21 +185,18 @@ flights.get('/destinations', async (req, res) => {
 flights.post('/confirmbooking', async (req,res) => {
     const jsonData = JSON.parse(JSON.stringify(req.body))
     try{
-        console.log(jsonData)
         const departureData = jsonData.departureData
         const query = "INSERT INTO ticket (price, purchaser, flightid, origin, destination, departuretime, arrivaltime) VALUES ($1, $2, $3, $4, $5, $6, $7) returning bookingid"
         const departureFlight = await pool.query(query, [departureData.price, departureData.custid, departureData.flightid, 
             departureData.origin, departureData.destination, departureData.departuretime, departureData.arrivaltime])
-        console.log("flight:", departureFlight.rows[0].bookingid)
         if (jsonData.returnData){
             const returnData = jsonData.returnData
             const returnFlight = await pool.query(query, [returnData.price, returnData.custid, returnData.flightid,
             returnData.origin, returnData.destination, returnData.departuretime, returnData.arrivaltime])
-            console.log("return:", returnFlight.rows[0].bookingid)
         }
         const refreshView = "REFRESH MATERIALIZED VIEW employee_view"
         await pool.query(refreshView)
-
+        
         res.json(departureFlight.rows[0].bookingid)
     }
     catch (err){
@@ -243,7 +240,8 @@ flights.post('/updateflight', async (req, res) => {
         const query = "UPDATE ticket SET flightid = $1, departuretime = $2, arrivaltime = $3, price= $4 WHERE purchaser = $5 AND bookingID = $6"
         console.log(jsonData)
         console.log(jsonData.departureData.flightid)
-        const values = [jsonData.departureData.flightid, jsonData.departureData.departuretime, jsonData.departureData.arrivaltime, jsonData.departureData.price, jsonData.departureData.custid, jsonData.bookingID]
+        const values = [jsonData.departureData.flightid, jsonData.departureData.departuretime, jsonData.departureData.arrivaltime, 
+            jsonData.departureData.price, jsonData.departureData.custid, jsonData.bookingID]
         console.log(values)
         const results = await pool.query(query, values)
         console.log(results)
