@@ -71,7 +71,7 @@ function EmpView() {
                     )}
                 />
                 <div className="buttonContainer">
-                <Button onClick={filterData}>Search</Button>
+                <Button variant="contained" onClick={filterData}>Search</Button>
                 </div>
             <div className="content">
                 {filteredData.length > 0 ? <> 
