@@ -13,6 +13,7 @@ import MyFlights from './components/MyFlights/MyFlights'
 import EditFlights from './components/MyFlights/EditFlights';
 import EmpView from './components/employee/EmpView';
 import ContactUs from './components/ContactUs/ContactUs';
+import ViewUser from './components/employee/ViewUser'
 import './App.css'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/editflights" exact element={<EditFlights/>}/>
           <Route path="/empview" exact element={<EmpView loggeduser={loggeduser} />} />
           <Route path="/contactus" exact element={<ContactUs/>} />
+          <Route path="/viewuser" exact element={<ViewUser/>} />
         </Routes>
       </div>
       <Footer />
