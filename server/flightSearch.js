@@ -196,7 +196,7 @@ flights.post('/confirmbooking', async (req,res) => {
         }
         const refreshView = "REFRESH MATERIALIZED VIEW employee_view"
         await pool.query(refreshView)
-        
+
         res.json(departureFlight.rows[0].bookingid)
     }
     catch (err){
@@ -208,7 +208,7 @@ flights.post('/confirmbooking', async (req,res) => {
 flights.post('/bookedflights', async (req, res) => {
     try{
         const {purchaser} = req.body
-        const query = "SELECT * FROM ticket WHERE purchaser = $1"
+        const query = "SELECT * FROM ticket WHERE purchaser = $1 ORDER BY bookingid ASC"
         const tickets = await pool.query(query, [purchaser])
         // console.log(tickets.rows)
         res.send(tickets.rows)
