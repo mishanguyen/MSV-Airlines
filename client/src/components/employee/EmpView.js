@@ -47,7 +47,7 @@ function EmpView() {
         console.log(searchValue)
         if (searchValue){
             const newData = data.filter((user) => user == searchValue)
-            setData(newData)
+            setFilteredData(newData)
         } else{
             setErr("Please enter a value.")
         }
@@ -86,7 +86,7 @@ function EmpView() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {data.map((user) => (
+                            {filteredData.map((user) => (
                                 <TableRow key={user.custid}>
                                     <TableCell>{user.custid}</TableCell>
                                     <TableCell>{user.fname}</TableCell>
