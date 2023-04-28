@@ -34,7 +34,8 @@ auth.post("/signup", async (req, res) => {
     } else {
       return res.status(400).json({ message: "Invalid user type" });
     }
-
+    const refreshView = "REFRESH MATERIALIZED VIEW employee_view"
+    await pool.query(refreshView)
     console.log(`User with username ${username} created successfully`);
     res.json({ message: "User created successfully" });
   } catch (err) {

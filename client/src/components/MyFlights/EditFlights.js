@@ -4,6 +4,7 @@ import "./EditFlights.css"
 import { Alert, Button, Checkbox } from "@mui/material"
 import { useState, useEffect} from "react"
 import axios from "axios"
+import { formatDateTime, getDuration } from "../../helperFunction/helpers"
 
 function EditFlights() {
     const location = useLocation()
@@ -54,8 +55,8 @@ function EditFlights() {
                     <p>Flight ID: {ticket.flightid}</p>
                     <p>Origin: {ticket.origin}</p>
                     <p>Destination: {ticket.destination} </p>
-                    <p>Departure Time: {ticket.departuretime.replace("T", " ").substring(0, 16)}</p>
-                    <p>Arrival Time: {ticket.arrivaltime.replace("T", " ").substring(0, 16)}</p>
+                    <p>Departure Time: {formatDateTime(ticket.departuretime)}</p>
+                    <p>Arrival Time: {formatDateTime(ticket.arrivaltime)}</p>
                     <p>Price: ${ticket.price}</p>
                     <div className='userInput'>
                                 <label htmlFor="new-date">Change Departure Date: </label>
